@@ -53,7 +53,7 @@ const projects = [
     tags: ["React", "TypeScript", "Tailwind"],
     github: "https://github.com/Usama-Saif01/Face-Emotion-Recognition",
     icon: Shield, // You can change this to another imported icon
-    accent: "var(--accent)",
+    accent: "#f59e0b",
     accentLight: "var(--accent-light)",
   },
 ];
