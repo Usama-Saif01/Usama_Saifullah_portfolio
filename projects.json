@@ -1,0 +1,14 @@
+[
+  {
+    "title": "A* Robotics Navigation",
+    "description": "Path-planning project for TurtleBot3 using ROS and Gazebo simulation.",
+    "url": "https://github.com/Usama-Saif01/turtlebot3_enhanced_nav",
+    "tags": ["ROS", "Python", "Robotics"]
+  },
+  {
+    "title": "Deep Learning Model",
+    "description": "Performance comparison of CNN and ResNet architectures.",
+    "url": "https://github.com/Usama-Saif01/Face-Emotion-Recognition",
+    "tags": ["AI/ML", "CNN", "Python"]
+  }
+]
