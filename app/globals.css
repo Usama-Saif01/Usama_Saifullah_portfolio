@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   Custom Design Tokens
+───────────────────────────────────────────── */
+@layer base {
+  :root {
+    --font-display: "Syne", sans-serif;
+    --font-body: "DM Sans", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+
+    /* Light mode */
+    --bg: #f8f7f4;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0ede8;
+    --text-primary: #0f0e0c;
+    --text-secondary: #5c5750;
+    --text-muted: #9b948c;
+    --border: #e2ddd8;
+    --accent: #d4490a;
+    --accent-light: #fde8de;
+    --accent2: #1a4fad;
+    --accent2-light: #dce8fb;
+    --tag-bg: #f0ede8;
+    --tag-text: #5c5750;
+    --nav-bg: rgba(248, 247, 244, 0.9);
+  }
+
+  .dark {
+    --bg: #0c0b09;
+    --bg-card: #171512;
+    --bg-card-hover: #201e1a;
+    --text-primary: #f5f3ef;
+    --text-secondary: #b0aa9f;
+    --text-muted: #6b6560;
+    --border: #2a2621;
+    --accent: #f5622b;
+    --accent-light: #2d1a0f;
+    --accent2: #4a7fe0;
+    --accent2-light: #0f1e36;
+    --tag-bg: #201e1a;
+    --tag-text: #b0aa9f;
+    --nav-bg: rgba(12, 11, 9, 0.92);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+    background-color: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Scrollbar Styling
+───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────
+   Custom Utilities
+───────────────────────────────────────────── */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-body {
+    font-family: var(--font-body);
+  }
+  .font-mono-custom {
+    font-family: var(--font-mono);
+  }
+  .text-primary {
+    color: var(--text-primary);
+  }
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+  .text-muted {
+    color: var(--text-muted);
+  }
+  .bg-surface {
+    background-color: var(--bg);
+  }
+  .bg-card {
+    background-color: var(--bg-card);
+  }
+  .border-subtle {
+    border-color: var(--border);
+  }
+  .text-accent {
+    color: var(--accent);
+  }
+  .bg-accent {
+    background-color: var(--accent);
+  }
+  .bg-accent-light {
+    background-color: var(--accent-light);
+  }
+  .text-accent2 {
+    color: var(--accent2);
+  }
+  .bg-accent2-light {
+    background-color: var(--accent2-light);
+  }
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+}
