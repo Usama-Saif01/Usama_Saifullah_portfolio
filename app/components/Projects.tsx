@@ -44,6 +44,18 @@ const projects = [
     accent: "#16a34a",
     accentLight: "rgba(22, 163, 74, 0.08)",
   },
+  {
+    id: 4,
+    number: "04",
+    title: "🎭 Face Emotion Recognition CNN",
+    subtitle: "Real-Time Facial Expression Classification using TensorFlow & Keras",
+    description: "A deep learning project that classifies human facial expressions into 7 distinct emotions using a custom Convolutional Neural Network (CNN). The system is trained on grayscale images and includes a real-time detection module using OpenCV to predict emotions directly from a live webcam feed.",
+    tags: ["React", "TypeScript", "Tailwind"],
+    github: "https://github.com/Usama-Saif01/Face-Emotion-Recognition",
+    icon: Shield, // You can change this to another imported icon
+    accent: "var(--accent)",
+    accentLight: "var(--accent-light)",
+  },
 ];
 
 export default function Projects() {
