@@ -1,210 +1,120 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
-];
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
+import { Sun, Moon, Menu } from "lucide-react";
 
 export default function Navbar() {
-  const [isDark, setIsDark] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const shouldBeDark = saved === "dark" || (!saved && prefersDark);
-    setIsDark(shouldBeDark);
-    if (shouldBeDark) document.documentElement.classList.add("dark");
+  useEffect(() => setMounted(true), []);
 
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 200);
+  });
 
-  const toggleDark = () => {
-    const next = !isDark;
-    setIsDark(next);
-    if (next) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
-
-  const handleNavClick = (href: string) => {
-    setIsMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <>
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style={{
-          backgroundColor: scrolled ? "var(--nav-bg)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--border)" : "none",
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <motion.a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            className="font-display text-lg font-bold tracking-tight"
-            style={{
-              fontFamily: "var(--font-syne), sans-serif",
-              color: "var(--text-primary)",
-            }}
-            whileHover={{ scale: 1.02 }}
-          >
-            <span style={{ color: "var(--accent)" }}>U</span>sama Sethar
-            <span
-              className="inline-block w-1.5 h-1.5 rounded-full ml-1 mb-1"
-              style={{ backgroundColor: "var(--accent)" }}
-            />
-          </motion.a>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, i) => (
-              <motion.button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className="text-sm font-medium transition-colors duration-200"
-                style={{ color: "var(--text-secondary)" }}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i + 0.3 }}
-                whileHover={{ color: "var(--accent)" }}
-              >
-                {link.label}
-              </motion.button>
-            ))}
-
-            {/* Dark Mode Toggle */}
-            <motion.button
-              onClick={toggleDark}
-              className="p-2 rounded-lg transition-colors duration-200"
-              style={{
-                backgroundColor: "var(--tag-bg)",
-                color: "var(--text-secondary)",
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 py-4 transition-colors duration-300"
+      style={{
+        backgroundColor: isScrolled ? "rgba(var(--bg-rgb), 0.8)" : "transparent",
+        backdropFilter: isScrolled ? "blur(12px)" : "none",
+        borderBottom: isScrolled ? "1px solid var(--card-border)" : "1px solid transparent",
+      }}
+    >
+      {/* ── LEFT: Logo & Flying Mini DP ── */}
+      <div className="flex items-center">
+        <AnimatePresence>
+          {isScrolled && (
+            <motion.div
+              layoutId="hero-dp-container"
+              className="flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer shadow-lg"
+              style={{ 
+                width: 36, height: 36, marginRight: 12, borderRadius: "50%",
+                border: "2px solid var(--accent)", backgroundColor: "var(--accent)"
               }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Toggle dark mode"
+              whileHover={{ scale: 1.15, rotate: 5, borderRadius: "35%", boxShadow: "0 0 20px var(--accent)" }}
+              whileTap={{ scale: 0.9 }}
+              onClick={scrollToTop}
+              title="Back to top"
             >
-              <AnimatePresence mode="wait">
-                {isDark ? (
-                  <motion.span
-                    key="sun"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Sun size={16} />
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="moon"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Moon size={16} />
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          </nav>
+              <motion.img
+                layoutId="hero-dp-image"
+                src="/dp.webp" 
+                alt="Usama Saifullah"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-          {/* Mobile Controls */}
-          <div className="flex items-center gap-2 md:hidden">
-            <motion.button
-              onClick={toggleDark}
-              className="p-2 rounded-lg"
-              style={{
-                backgroundColor: "var(--tag-bg)",
-                color: "var(--text-secondary)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Toggle dark mode"
+        <motion.a 
+          layout 
+          href="#" 
+          className="font-extrabold text-xl tracking-tight origin-left" 
+          style={{ color: "var(--text-primary)" }}
+          whileHover={{ scale: 1.05, color: "var(--accent)" }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Usama<span style={{ color: "var(--accent)" }}>.</span>
+        </motion.a>
+      </div>
+
+      {/* ── RIGHT: Navigation & Theme Toggle ── */}
+      <div className="flex items-center gap-6 sm:gap-8">
+        <div className="hidden sm:flex items-center gap-8 text-sm font-semibold">
+          {["Projects", "Skills"].map((item) => (
+            <motion.a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="transition-colors relative"
+              style={{ color: "var(--text-secondary)" }}
+              whileHover={{ y: -2, color: "var(--text-primary)" }}
+              whileTap={{ y: 0, scale: 0.95 }}
             >
-              {isDark ? <Sun size={16} /> : <Moon size={16} />}
-            </motion.button>
-            <motion.button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg"
-              style={{
-                backgroundColor: "var(--tag-bg)",
-                color: "var(--text-secondary)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
-            </motion.button>
-          </div>
+              {item}
+              <motion.span 
+                className="absolute -bottom-2 left-1/2 w-1 h-1 rounded-full opacity-0 -translate-x-1/2"
+                style={{ backgroundColor: "var(--accent)" }}
+                whileHover={{ opacity: 1, scale: 1.5 }}
+              />
+            </motion.a>
+          ))}
         </div>
-      </motion.header>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed top-16 left-0 right-0 z-40 md:hidden"
-            style={{
-              backgroundColor: "var(--nav-bg)",
-              backdropFilter: "blur(20px)",
-              borderBottom: "1px solid var(--border)",
-            }}
+        {/* Theme Toggle Button */}
+        {mounted && (
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: 15 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="p-2 rounded-full border transition-colors flex items-center justify-center"
+            style={{ borderColor: "var(--card-border)", color: "var(--text-primary)", backgroundColor: "var(--card-bg)" }}
+            aria-label="Toggle Dark Mode"
           >
-            <div className="px-6 py-4 flex flex-col gap-1">
-              {navLinks.map((link, i) => (
-                <motion.button
-                  key={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  className="text-left py-3 px-4 rounded-lg text-sm font-medium transition-colors"
-                  style={{ color: "var(--text-secondary)" }}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * i }}
-                  whileHover={{
-                    backgroundColor: "var(--tag-bg)",
-                    color: "var(--accent)",
-                  }}
-                >
-                  {link.label}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </motion.button>
         )}
-      </AnimatePresence>
-    </>
+
+        {/* Mobile Menu Button */}
+        <motion.button 
+          className="sm:hidden p-2 rounded-lg" 
+          style={{ color: "var(--text-primary)" }}
+          whileHover={{ scale: 1.1, backgroundColor: "var(--card-hover)" }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <Menu className="w-6 h-6" />
+        </motion.button>
+      </div>
+    </motion.nav>
   );
 }

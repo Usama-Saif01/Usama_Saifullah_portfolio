@@ -1,250 +1,132 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Github, ExternalLink, Bot, Brain, Shield } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Bot, Brain, Shield, ScanFace, ExternalLink } from "lucide-react";
+
+// --- Custom SVG Icon ---
+const GithubIcon = (props: any) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+  </svg>
+);
+// -----------------------
 
 const projects = [
   {
-    id: 1,
-    number: "01",
     title: "TurtleBot3 Enhanced Navigation",
-    subtitle: "Autonomous A* Pathfinding & Dynamic Obstacle Avoidance",
-    description:
-      "Engineered an advanced navigation system for TurtleBot3 in ROS Noetic. Implemented A* pathfinding algorithms with real-time dynamic obstacle detection and avoidance. The system achieves robust autonomous navigation in complex, cluttered environments.",
-    tags: ["ROS Noetic", "Python", "A* Algorithm", "Robotics", "Autonomous Nav"],
-    github: "https://github.com/Usama-Saif01/turtlebot3_enhanced_nav",
+    subtitle: "Autonomous A* Pathfinding",
+    description: "Engineered an advanced navigation system in ROS Noetic utilizing A* algorithms with real-time dynamic obstacle detection in cluttered environments.",
     icon: Bot,
-    accent: "var(--accent)",
-    accentLight: "var(--accent-light)",
+    github: "https://github.com/Usama-Saif01/turtlebot3_enhanced_nav",
+    color: "#10b981" // Emerald Green (Robotics)
   },
   {
-    id: 2,
-    number: "02",
     title: "AI-Powered Lungs Disease Diagnosis",
-    subtitle: "Neural Network for Pulmonary Condition Identification",
-    description:
-      "Developed a convolutional neural network (CNN) system capable of identifying pulmonary conditions from medical imaging data. Designed the full ML pipeline from data preprocessing and model architecture to training and inference evaluation.",
-    tags: ["CNN", "Deep Learning", "Python", "Medical AI", "TensorFlow"],
-    github: "https://github.com/Usama-Saifullah/AI-Lungs-Diagnosis-CS007",
+    subtitle: "Neural Network for Medical Imaging",
+    description: "Developed a CNN capable of identifying pulmonary conditions from medical imaging data. Built the full pipeline from data preprocessing to inference.",
     icon: Brain,
-    accent: "var(--accent2)",
-    accentLight: "var(--accent2-light)",
+    github: "https://github.com/Usama-Saifullah/AI-Lungs-Diagnosis-CS007",
+    color: "#0ea5e9" // Ocean Blue (Medical AI)
   },
   {
-    id: 3,
-    number: "03",
     title: "Secure System Provisioning",
-    subtitle: "Linux Hardening & Network Configuration",
-    description:
-      "Executed bare-metal manual installations and hardened network configurations for Kali Linux and Windows Server environments. Automated DNS, DHCP, and FTP protocol management. Implemented security benchmarks and monitoring workflows.",
-    tags: ["Kali Linux", "Windows Server", "DNS/DHCP", "Security", "Bash"],
-    github: "https://github.com/Usama-Saif01",
+    subtitle: "Linux Hardening & Network Config",
+    description: "Executed bare-metal installations and hardened environments for Kali Linux and Windows Server. Automated DNS, DHCP, and FTP protocol management.",
     icon: Shield,
-    accent: "#16a34a",
-    accentLight: "rgba(22, 163, 74, 0.08)",
+    github: "https://github.com/Usama-Saif01",
+    color: "#8b5cf6" // Violet (Cybersecurity)
   },
   {
-    id: 4,
-    number: "04",
-    title: "🎭 Face Emotion Recognition CNN",
-    subtitle: "Real-Time Facial Expression Classification using TensorFlow & Keras",
-    description: "A deep learning project that classifies human facial expressions into 7 distinct emotions using a custom Convolutional Neural Network (CNN). The system is trained on grayscale images and includes a real-time detection module using OpenCV to predict emotions directly from a live webcam feed.",
-    tags: ["React", "TypeScript", "Tailwind"],
+    title: "Face Emotion Recognition CNN",
+    subtitle: "Real-Time Expression Classification",
+    description: "Deep learning project classifying facial expressions into 7 emotions using a custom CNN and TensorFlow. Includes real-time webcam detection via OpenCV.",
+    icon: ScanFace,
     github: "https://github.com/Usama-Saif01/Face-Emotion-Recognition",
-    icon: Shield, // You can change this to another imported icon
-    accent: "#f59e0b",
-    accentLight: "var(--accent-light)",
-  },
+    color: "#f43f5e" // Rose Pink (Vision AI)
+  }
 ];
 
 export default function Projects() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section
-      id="projects"
-      ref={ref}
-      className="py-28 px-6 max-w-6xl mx-auto"
-      aria-label="Projects"
-    >
-      {/* Section Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-        className="mb-16"
-      >
-        <div className="flex items-center gap-4 mb-4">
-          <span
-            className="text-xs font-medium tracking-widest uppercase"
-            style={{
-              color: "var(--accent)",
-              fontFamily: "var(--font-jetbrains), monospace",
-            }}
-          >
-            01 / Work
-          </span>
-          <div
-            className="h-px flex-1 max-w-[60px]"
-            style={{ backgroundColor: "var(--border)" }}
-          />
-        </div>
-        <h2
-          className="text-4xl sm:text-5xl font-extrabold tracking-tight"
-          style={{
-            fontFamily: "var(--font-syne), sans-serif",
-            color: "var(--text-primary)",
-          }}
-        >
-          Featured Projects
+    <section id="projects" className="py-28 px-6 max-w-7xl mx-auto overflow-hidden">
+      <div className="mb-16">
+        <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
+          Featured Work
         </h2>
-      </motion.div>
+      </div>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="flex flex-col lg:flex-row justify-center items-center py-10 min-h-[500px]">
         {projects.map((project, i) => {
           const Icon = project.icon;
+          const isHovered = hoveredIndex === i;
+          
+          let xOffset = 0;
+          if (hoveredIndex !== null) {
+            if (i < hoveredIndex) xOffset = -50;
+            if (i > hoveredIndex) xOffset = 50;
+          }
+
+          const defaultRotate = (i - 1.5) * 6; 
+
           return (
             <motion.article
-              key={project.id}
-              initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.15,
-                ease: "easeOut",
+              key={project.title}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              animate={{
+                scale: isHovered ? 1.08 : 1,
+                rotate: isHovered ? 0 : defaultRotate,
+                x: isHovered ? 0 : xOffset,
+                zIndex: isHovered ? 20 : i,
+                borderColor: isHovered ? project.color : "var(--card-border)", 
+                boxShadow: isHovered ? `0 20px 40px -10px ${project.color}66` : "0 4px 6px -1px rgba(0, 0, 0, 0.1)", 
               }}
-              className="group relative flex flex-col p-6 rounded-2xl transition-all duration-300 cursor-pointer"
-              style={{
-                backgroundColor: "var(--bg-card)",
-                border: "1px solid var(--border)",
-              }}
-              whileHover={{
-                y: -4,
-                boxShadow: `0 20px 40px -12px rgba(0,0,0,0.15)`,
-                borderColor: project.accent,
-              }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              /* 👇 The Fix: bg-[var(--card-bg)] added to className, style prop removed */
+              className="relative w-80 h-[420px] rounded-2xl border flex flex-col p-6 cursor-pointer lg:-ml-20 first:ml-0 mt-6 lg:mt-0 transition-colors bg-[var(--card-bg)]"
             >
-              {/* Card Number + Icon */}
-              <div className="flex items-start justify-between mb-6">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                  style={{
-                    backgroundColor: project.accentLight,
-                    color: project.accent,
+              <div className="flex items-center justify-between mb-6">
+                <div 
+                  className="w-14 h-14 rounded-xl flex items-center justify-center transition-colors"
+                  style={{ 
+                    backgroundColor: isHovered ? project.color : "var(--card-hover)", 
+                    color: isHovered ? "#fff" : project.color 
                   }}
                 >
-                  <Icon size={22} />
+                  <Icon size={28} />
                 </div>
-                <span
-                  className="text-3xl font-extrabold opacity-20 group-hover:opacity-40 transition-opacity"
-                  style={{
-                    fontFamily: "var(--font-syne), sans-serif",
-                    color: project.accent,
-                  }}
-                >
-                  {project.number}
+                <span className="text-4xl font-extrabold opacity-10 transition-colors" style={{ color: "var(--text-primary)" }}>
+                  0{i + 1}
                 </span>
               </div>
 
-              {/* Content */}
               <div className="flex-1">
-                <h3
-                  className="text-lg font-bold mb-1 leading-snug"
-                  style={{
-                    fontFamily: "var(--font-syne), sans-serif",
-                    color: "var(--text-primary)",
-                  }}
-                >
+                <h3 className="text-xl font-bold mb-2 leading-snug transition-colors" style={{ color: "var(--text-primary)" }}>
                   {project.title}
                 </h3>
-                <p
-                  className="text-xs font-medium mb-3"
-                  style={{ color: project.accent }}
-                >
+                <p className="text-sm font-medium mb-4 transition-colors" style={{ color: project.color }}>
                   {project.subtitle}
                 </p>
-                <p
-                  className="text-sm leading-relaxed mb-5"
-                  style={{ color: "var(--text-secondary)" }}
-                >
+                <p className="text-sm leading-relaxed transition-colors" style={{ color: "var(--text-secondary)" }}>
                   {project.description}
                 </p>
               </div>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 mb-5">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2.5 py-1 rounded-md text-xs font-medium"
-                    style={{
-                      backgroundColor: "var(--tag-bg)",
-                      color: "var(--tag-text)",
-                      fontFamily: "var(--font-jetbrains), monospace",
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Links */}
-              <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: "var(--border)" }}>
-                <motion.a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium transition-colors"
-                  style={{ color: "var(--text-secondary)" }}
-                  whileHover={{ color: project.accent }}
-                  aria-label={`View ${project.title} on GitHub`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Github size={14} />
-                  View Code
-                </motion.a>
-                <span style={{ color: "var(--border)" }}>·</span>
-                <motion.a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium transition-colors"
-                  style={{ color: "var(--text-secondary)" }}
-                  whileHover={{ color: project.accent }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ExternalLink size={14} />
-                  Open
-                </motion.a>
+              <div className="flex items-center gap-4 pt-6 mt-auto border-t transition-colors" style={{ borderColor: "var(--card-border)" }}>
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70" style={{ color: "var(--text-secondary)" }}>
+                  <GithubIcon size={16} /> Source
+                </a>
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70" style={{ color: "var(--text-secondary)" }}>
+                  <ExternalLink size={16} /> Open
+                </a>
               </div>
             </motion.article>
           );
         })}
       </div>
-
-      {/* More on GitHub */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ delay: 0.7 }}
-        className="mt-12 text-center"
-      >
-        <motion.a
-          href="https://github.com/Usama-Saif01"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
-          style={{ color: "var(--text-muted)" }}
-          whileHover={{ color: "var(--accent)" }}
-        >
-          <Github size={16} />
-          See more on GitHub
-          <ExternalLink size={12} />
-        </motion.a>
-      </motion.div>
     </section>
   );
 }

@@ -2,7 +2,23 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Mail, Github, Linkedin, ArrowUpRight, Send } from "lucide-react";
+import { Mail, ArrowUpRight, Send } from "lucide-react"; // Removed Github and Linkedin
+
+// --- Custom SVG Icons to replace the missing Lucide brand icons ---
+const GithubIcon = (props: any) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+  </svg>
+);
+
+const LinkedinIcon = (props: any) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+    <rect x="2" y="9" width="4" height="12"></rect>
+    <circle cx="4" cy="4" r="2"></circle>
+  </svg>
+);
+// ------------------------------------------------------------------
 
 const contactLinks = [
   {
@@ -16,15 +32,15 @@ const contactLinks = [
     label: "GitHub",
     value: "Usama-Saif01",
     href: "https://github.com/Usama-Saif01",
-    icon: Github,
+    icon: GithubIcon, // Updated to use the custom SVG
     color: "var(--text-primary)",
   },
   {
     label: "LinkedIn",
     value: "usama-saifullah-sethar",
     href: "https://linkedin.com/in/usama-saifullah-sethar",
-    icon: Linkedin,
-    color: "var(--accent2)",
+    icon: LinkedinIcon, // Updated to use the custom SVG
+    color: "var(--accent)", // Changed from --accent2 just in case it wasn't defined in your CSS
   },
 ];
 
@@ -38,8 +54,8 @@ export default function Contact() {
       ref={ref}
       className="py-28 px-6"
       style={{
-        backgroundColor: "var(--bg-card)",
-        borderTop: "1px solid var(--border)",
+        backgroundColor: "var(--bg)", // Updated to match your theme setup
+        borderTop: "1px solid var(--card-border)", // Updated to match your theme setup
       }}
       aria-label="Contact"
     >
@@ -56,22 +72,18 @@ export default function Contact() {
               className="text-xs font-medium tracking-widest uppercase"
               style={{
                 color: "var(--accent)",
-                fontFamily: "var(--font-jetbrains), monospace",
               }}
             >
               04 / Contact
             </span>
             <div
               className="h-px flex-1 max-w-[60px]"
-              style={{ backgroundColor: "var(--border)" }}
+              style={{ backgroundColor: "var(--card-border)" }}
             />
           </div>
           <h2
             className="text-4xl sm:text-5xl font-extrabold tracking-tight"
-            style={{
-              fontFamily: "var(--font-syne), sans-serif",
-              color: "var(--text-primary)",
-            }}
+            style={{ color: "var(--text-primary)" }}
           >
             Let&apos;s Connect
           </h2>
@@ -104,7 +116,6 @@ export default function Contact() {
               style={{
                 backgroundColor: "var(--accent)",
                 color: "#fff",
-                fontFamily: "var(--font-syne), sans-serif",
               }}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.97 }}
@@ -120,11 +131,8 @@ export default function Contact() {
                 style={{ backgroundColor: "#16a34a" }}
               />
               <span
-                className="text-sm"
-                style={{
-                  color: "var(--text-muted)",
-                  fontFamily: "var(--font-jetbrains), monospace",
-                }}
+                className="text-sm font-mono"
+                style={{ color: "var(--text-secondary)" }}
               >
                 Open to full-time & contract roles
               </span>
@@ -148,8 +156,8 @@ export default function Contact() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 p-5 rounded-xl group transition-all duration-200"
                   style={{
-                    backgroundColor: "var(--bg)",
-                    border: "1px solid var(--border)",
+                    backgroundColor: "var(--card-bg)",
+                    border: "1px solid var(--card-border)",
                   }}
                   initial={{ opacity: 0, y: 15 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -163,7 +171,7 @@ export default function Contact() {
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors"
                     style={{
-                      backgroundColor: "var(--tag-bg)",
+                      backgroundColor: "var(--card-hover)",
                       color: link.color,
                     }}
                   >
@@ -171,11 +179,8 @@ export default function Contact() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p
-                      className="text-xs font-medium mb-0.5 uppercase tracking-widest"
-                      style={{
-                        color: "var(--text-muted)",
-                        fontFamily: "var(--font-jetbrains), monospace",
-                      }}
+                      className="text-xs font-mono font-medium mb-0.5 uppercase tracking-widest"
+                      style={{ color: "var(--text-secondary)" }}
                     >
                       {link.label}
                     </p>

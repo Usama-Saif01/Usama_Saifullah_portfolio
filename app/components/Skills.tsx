@@ -1,251 +1,171 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import {
-  Terminal,
-  Network,
-  ShieldCheck,
-  Award,
-  Brain,
-  Code2,
-  Server,
-  GitBranch,
-  Globe,
-  Layers,
-  Lock,
-  Cpu,
-  Database,
-  FileCode,
-  BrainCircuit,
-  ScanSearch,
-} from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Shield, Brain, Bot, Code } from "lucide-react"; // Removed Terminal as it wasn't used
 
 const skillCategories = [
   {
-    id: "sysadmin",
-    label: "01",
-    title: "System Admin & Security",
-    description:
-      "Hardening systems, managing infrastructure, and securing networks.",
-    color: "var(--accent)",
-    colorLight: "var(--accent-light)",
-    icon: ShieldCheck,
-    certification: {
-      label: "Google Cybersecurity Professional",
-      icon: Award,
-    },
+    title: "Cybersecurity & Systems",
+    subtitle: "OS Hardening & Networks",
+    icon: Shield,
+    description: "Securing infrastructure and managing advanced server environments.",
     skills: [
-      { name: "Kali Linux", icon: Terminal },
-      { name: "Windows Server", icon: Server },
-      { name: "Network Protocols (DNS, DHCP, FTP)", icon: Network },
-      { name: "Firewall & IDS/IPS", icon: Lock },
-      { name: "Vulnerability Assessment", icon: ScanSearch },
-      { name: "Bash Scripting", icon: FileCode },
+      "Kali Linux",
+      "Windows Server",
+      "Network Security",
+      "DNS / DHCP / FTP",
+      "Vulnerability Management",
+      "IT Audit Frameworks"
     ],
+    color: "#8b5cf6" // Violet
   },
   {
-    id: "ai",
-    label: "02",
-    title: "AI / Machine Learning",
-    description:
-      "Building and deploying neural networks for real-world applications.",
-    color: "var(--accent2)",
-    colorLight: "var(--accent2-light)",
-    icon: BrainCircuit,
-    certification: null,
+    title: "AI & Deep Learning",
+    subtitle: "Neural Networks & Vision",
+    icon: Brain,
+    description: "Designing and training models for complex image recognition tasks.",
     skills: [
-      { name: "Convolutional Neural Networks", icon: Brain },
-      { name: "Python & NumPy/Pandas", icon: Code2 },
-      { name: "TensorFlow / Keras", icon: Cpu },
-      { name: "ML Pipelines & Data Preprocessing", icon: Database },
-      { name: "Transformer Models", icon: Layers },
-      { name: "ROS Noetic (Robotics)", icon: BrainCircuit },
+      "Python",
+      "TensorFlow & Keras",
+      "Convolutional Neural Networks (CNN)",
+      "Medical AI Imaging",
+      "OpenCV",
+      "Data Preprocessing"
     ],
+    color: "#0ea5e9" // Ocean Blue
   },
   {
-    id: "web",
-    label: "03",
-    title: "Web Development",
-    description: "Shipping modern, performant web applications end-to-end.",
-    color: "#16a34a",
-    colorLight: "rgba(22, 163, 74, 0.08)",
-    icon: Globe,
-    certification: null,
+    title: "Robotics & Autonomous",
+    subtitle: "ROS & Pathfinding",
+    icon: Bot,
+    description: "Engineering navigation systems for autonomous robots in complex environments.",
     skills: [
-      { name: "React & Next.js", icon: Globe },
-      { name: "TypeScript", icon: Code2 },
-      { name: "Tailwind CSS", icon: Layers },
-      { name: "REST API Integration", icon: Network },
-      { name: "Git & Version Control", icon: GitBranch },
-      { name: "Node.js (Basics)", icon: Server },
+      "ROS Noetic",
+      "A* Algorithm",
+      "TurtleBot3",
+      "LiDAR & Odometry",
+      "Dynamic Obstacle Avoidance",
+      "Gazebo Simulation"
     ],
+    color: "#10b981" // Emerald Green
   },
+  {
+    title: "Web & Development",
+    subtitle: "Modern Frontend Stack",
+    icon: Code,
+    description: "Building responsive, high-performance portfolios and web applications.",
+    skills: [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "TypeScript",
+      "Framer Motion",
+      "Git & GitHub"
+    ],
+    color: "#f59e0b" // Amber/Yellow
+  }
 ];
 
 export default function Skills() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section
-      id="skills"
-      ref={ref}
-      className="py-28 px-6"
-      style={{ backgroundColor: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}
-      aria-label="Skills"
-    >
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
-          <div className="flex items-center gap-4 mb-4">
-            <span
-              className="text-xs font-medium tracking-widest uppercase"
-              style={{
-                color: "var(--accent)",
-                fontFamily: "var(--font-jetbrains), monospace",
-              }}
-            >
-              02 / Expertise
-            </span>
-            <div
-              className="h-px flex-1 max-w-[60px]"
-              style={{ backgroundColor: "var(--border)" }}
-            />
-          </div>
-          <h2
-            className="text-4xl sm:text-5xl font-extrabold tracking-tight"
-            style={{
-              fontFamily: "var(--font-syne), sans-serif",
-              color: "var(--text-primary)",
-            }}
-          >
-            Technical Skills
-          </h2>
-        </motion.div>
+    <section id="skills" className="py-28 px-6 max-w-7xl mx-auto overflow-hidden">
+      <div className="mb-16">
+        <div className="flex items-center gap-4 mb-4">
+          <span className="text-xs font-mono font-semibold tracking-widest uppercase" style={{ color: "var(--accent)" }}>
+            02 / Expertise
+          </span>
+          <div className="h-px flex-1 max-w-[60px]" style={{ backgroundColor: "var(--text-secondary)", opacity: 0.3 }} />
+        </div>
+        <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight" style={{ color: "var(--text-primary)" }}>
+          Technical Skills
+        </h2>
+      </div>
 
-        {/* Skill Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {skillCategories.map((cat, i) => {
-            const CatIcon = cat.icon;
-            return (
-              <motion.div
-                key={cat.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.6,
-                  delay: i * 0.12,
-                  ease: "easeOut",
-                }}
-                className="p-6 rounded-2xl"
-                style={{
-                  backgroundColor: "var(--bg)",
-                  border: "1px solid var(--border)",
-                }}
-              >
-                {/* Category Header */}
-                <div className="flex items-start gap-4 mb-6">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                    style={{
-                      backgroundColor: cat.colorLight,
-                      color: cat.color,
+      {/* Stacked Cards Container */}
+      <div className="flex flex-col lg:flex-row justify-center items-center py-10 min-h-[500px]">
+        {skillCategories.map((category, i) => {
+          const Icon = category.icon;
+          const isHovered = hoveredIndex === i;
+          
+          // Calculate sliding offset for adjacent cards to push them out of the way
+          let xOffset = 0;
+          if (hoveredIndex !== null) {
+            if (i < hoveredIndex) xOffset = -60;
+            if (i > hoveredIndex) xOffset = 60;
+          }
+
+          // Initial tilted fan arrangement
+          const defaultRotate = (i - 1.5) * 6; 
+
+          return (
+            <motion.article
+              key={category.title}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              animate={{
+                scale: isHovered ? 1.08 : 1,
+                rotate: isHovered ? 0 : defaultRotate,
+                x: isHovered ? 0 : xOffset,
+                zIndex: isHovered ? 20 : i,
+                borderColor: isHovered ? category.color : "var(--card-border)", // Uses dynamic color
+                boxShadow: isHovered ? `0 20px 40px -10px ${category.color}66` : "0 4px 6px -1px rgba(0, 0, 0, 0.1)", // Dynamic shadow
+              }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="relative w-80 h-[460px] rounded-2xl border flex flex-col p-6 cursor-pointer lg:-ml-20 first:ml-0 mt-6 lg:mt-0 transition-colors"
+              style={{ backgroundColor: "var(--card-bg)" }} // Updated for themes
+            >
+              {/* Icon & Category Number */}
+              <div className="flex items-center justify-between mb-6">
+                <div 
+                  className="w-14 h-14 rounded-xl flex items-center justify-center transition-colors"
+                  style={{ 
+                    backgroundColor: isHovered ? category.color : "var(--card-hover)", 
+                    color: isHovered ? "#fff" : category.color // Dynamic icon color
+                  }}
+                >
+                  <Icon size={28} />
+                </div>
+                <span className="text-4xl font-extrabold opacity-10 transition-colors" style={{ color: "var(--text-primary)" }}>
+                  0{i + 1}
+                </span>
+              </div>
+
+              {/* Title & Description */}
+              <div className="mb-6">
+                <h3 className="text-xl font-bold mb-2 leading-snug transition-colors" style={{ color: "var(--text-primary)" }}>
+                  {category.title}
+                </h3>
+                {/* Dynamic Subtitle Color */}
+                <p className="text-sm font-medium mb-3 transition-colors" style={{ color: category.color }}>
+                  {category.subtitle}
+                </p>
+                <p className="text-sm leading-relaxed transition-colors" style={{ color: "var(--text-secondary)" }}>
+                  {category.description}
+                </p>
+              </div>
+
+              {/* Skill Tags */}
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {category.skills.map((skill) => (
+                  <span 
+                    key={skill}
+                    className="px-3 py-1.5 rounded-md text-[11px] font-mono font-medium transition-colors"
+                    style={{ 
+                      backgroundColor: isHovered ? category.color : "var(--card-hover)",  // Dynamic tag hover
+                      color: isHovered ? "#fff" : "var(--text-secondary)",
+                      border: isHovered ? "1px solid transparent" : "1px solid var(--card-border)"
                     }}
                   >
-                    <CatIcon size={20} />
-                  </div>
-                  <div>
-                    <span
-                      className="text-xs font-medium block mb-0.5"
-                      style={{
-                        color: cat.color,
-                        fontFamily: "var(--font-jetbrains), monospace",
-                      }}
-                    >
-                      {cat.label}
-                    </span>
-                    <h3
-                      className="font-bold text-base leading-snug"
-                      style={{
-                        fontFamily: "var(--font-syne), sans-serif",
-                        color: "var(--text-primary)",
-                      }}
-                    >
-                      {cat.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <p
-                  className="text-sm leading-relaxed mb-6"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  {cat.description}
-                </p>
-
-                {/* Skills List */}
-                <ul className="space-y-2.5">
-                  {cat.skills.map((skill, j) => {
-                    const SkillIcon = skill.icon;
-                    return (
-                      <motion.li
-                        key={skill.name}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={inView ? { opacity: 1, x: 0 } : {}}
-                        transition={{
-                          delay: i * 0.12 + j * 0.06 + 0.3,
-                          duration: 0.4,
-                        }}
-                        className="flex items-center gap-3"
-                      >
-                        <span
-                          className="shrink-0"
-                          style={{ color: cat.color }}
-                        >
-                          <SkillIcon size={14} />
-                        </span>
-                        <span
-                          className="text-sm"
-                          style={{ color: "var(--text-secondary)" }}
-                        >
-                          {skill.name}
-                        </span>
-                      </motion.li>
-                    );
-                  })}
-                </ul>
-
-                {/* Certification Badge */}
-                {cat.certification && (
-                  <div
-                    className="mt-6 pt-5 border-t flex items-center gap-2"
-                    style={{ borderColor: "var(--border)" }}
-                  >
-                    <Award
-                      size={14}
-                      style={{ color: cat.color, flexShrink: 0 }}
-                    />
-                    <span
-                      className="text-xs font-semibold"
-                      style={{
-                        color: cat.color,
-                        fontFamily: "var(--font-jetbrains), monospace",
-                      }}
-                    >
-                      ✓ {cat.certification.label}
-                    </span>
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
-        </div>
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.article>
+          );
+        })}
       </div>
     </section>
   );

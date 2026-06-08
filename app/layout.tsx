@@ -1,63 +1,29 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./Providers"; // <-- Add this import
+
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Usama Sethar — IT Support & Cybersecurity",
-  description:
-    "Portfolio of Usama Sethar — IT Technical Support specialist and Cybersecurity enthusiast specializing in Linux administration, network security, and AI/ML systems.",
-  keywords: [
-    "IT Support",
-    "Cybersecurity",
-    "Linux",
-    "Kali",
-    "Machine Learning",
-    "Network Administration",
-  ],
-  authors: [{ name: "Usama Sethar" }],
-  openGraph: {
-    title: "Usama Sethar — IT Support & Cybersecurity",
-    description:
-      "Portfolio of Usama Sethar — IT Technical Support specialist and Cybersecurity enthusiast.",
-    type: "website",
-  },
+  title: "Usama Saifullah | Portfolio",
+  description: "Portfolio of Usama Saifullah — IT Technical Support Officer and Cybersecurity Professional specializing in Linux Administration, Network Security, and AI/ML systems.",
+  keywords: ["IT Support", "Linux Administration", "Network Security", "AI/ML", "Cybersecurity", "Usama Saifullah"],
+  authors: [{ name: "Usama Saifullah" }],
+  icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Google Fonts — loaded in head for zero-FOUT */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('theme');
-                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
-                  }
-                } catch(e) {}
-              })();
-            `,
-          }}
-        />
-      </head>
-      <body className="antialiased noise-overlay">
-        {children}
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`} suppressHydrationWarning>
+      <body style={{ backgroundColor: "var(--bg)", color: "var(--text-primary)" }}>
+        {/* Wrap children in the Provider */}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

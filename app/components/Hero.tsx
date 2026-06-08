@@ -1,196 +1,152 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Download, Github, Linkedin } from "lucide-react";
+import { ChevronRight, FileText } from "lucide-react";
+
+function useTypewriter(phrases: string[]) {
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+
+  useEffect(() => {
+    const i = loopNum % phrases.length;
+    const fullText = phrases[i];
+
+    const typingSpeed = isDeleting ? 40 : 80;
+
+    const timer = setTimeout(() => {
+      setText((prev) => 
+        isDeleting 
+          ? fullText.substring(0, prev.length - 1) 
+          : fullText.substring(0, prev.length + 1)
+      );
+
+      if (!isDeleting && text === fullText) {
+        setTimeout(() => setIsDeleting(true), 1500);
+      } else if (isDeleting && text === "") {
+        setIsDeleting(false);
+        setLoopNum((prev) => prev + 1);
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, loopNum, phrases]);
+
+  return text;
+}
 
 export default function Hero() {
+  const phrases = [
+    "IT & Cybersecurity Professional",
+    "Aspiring IT Auditor",
+    "Google Cybersecurity Certified"
+  ];
+  
+  const typedText = useTypewriter(phrases);
+
   return (
-    <section
-      className="relative min-h-screen flex flex-col justify-center px-6 pt-24 pb-16 max-w-6xl mx-auto"
-      aria-label="Hero"
+    <section 
+      className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20 pb-16"
+      style={{ backgroundColor: "var(--bg)", color: "var(--text-primary)" }}
     >
-      {/* Background decorative blobs */}
-      <div
-        className="absolute top-1/4 right-0 w-96 h-96 rounded-full blur-3xl opacity-10 pointer-events-none"
-        style={{ background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)" }}
-      />
-      <div
-        className="absolute bottom-1/4 left-0 w-64 h-64 rounded-full blur-3xl opacity-8 pointer-events-none"
-        style={{ background: "radial-gradient(circle, var(--accent2) 0%, transparent 70%)" }}
-      />
-
-      <div className="relative z-10 max-w-4xl">
-        {/* Status badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-8"
-        >
-          <span
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-widest uppercase"
-            style={{
-              backgroundColor: "var(--accent-light)",
-              color: "var(--accent)",
-              border: "1px solid var(--accent)",
-              fontFamily: "var(--font-jetbrains), monospace",
-            }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: "var(--accent)" }} />
-            Available for opportunities
-          </span>
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.42 }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight mb-6"
-          style={{ fontFamily: "var(--font-syne), sans-serif", color: "var(--text-primary)" }}
-        >
-          Building Secure,{" "}
-          <span className="relative inline-block" style={{ color: "var(--accent)" }}>
-            Intelligent
-            <svg
-              className="absolute -bottom-2 left-0 w-full"
-              viewBox="0 0 200 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2 6 C50 2, 100 2, 198 6"
-                stroke="var(--accent)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                opacity="0.5"
-              />
-            </svg>
-          </span>{" "}
-          <br className="hidden sm:block" />
-          Systems.
-        </motion.h1>
-
-        {/* Sub-headline */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.54 }}
-          className="text-lg sm:text-xl leading-relaxed max-w-2xl mb-10"
-          style={{ color: "var(--text-secondary)" }}
-        >
-          IT Technical Support specialist &amp; Cybersecurity enthusiast. I configure
-          networks, harden Linux environments, build ML pipelines, and bring
-          security-first thinking to every layer of the stack.{" "}
-          <span style={{ color: "var(--text-muted)" }}>Based in Shikarpur, Sindh.</span>
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.66 }}
-          className="flex flex-wrap gap-4 mb-14"
-        >
-          <motion.a
-            href="#projects"
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg font-semibold text-sm transition-all duration-200 cursor-pointer"
-            style={{
-              backgroundColor: "var(--accent)",
-              color: "#fff",
-              fontFamily: "var(--font-syne), sans-serif",
-            }}
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            View Projects
-            <ArrowDown size={16} />
-          </motion.a>
-
-          <motion.a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg font-semibold text-sm transition-all duration-200"
-            style={{
-              backgroundColor: "var(--bg-card)",
-              color: "var(--text-primary)",
-              border: "1px solid var(--border)",
-              fontFamily: "var(--font-syne), sans-serif",
-            }}
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <Download size={16} />
-            Download CV
-          </motion.a>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.78 }}
-          className="flex items-center gap-6"
-        >
-          <span
-            className="text-xs tracking-widest uppercase"
-            style={{ color: "var(--text-muted)", fontFamily: "var(--font-jetbrains), monospace" }}
-          >
-            Find me on
-          </span>
-          <div className="h-px flex-1 max-w-[40px]" style={{ backgroundColor: "var(--border)" }} />
-          <div className="flex gap-3">
-            <motion.a
-              href="https://github.com/Usama-Saif01"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-lg transition-colors"
-              style={{ backgroundColor: "var(--tag-bg)", color: "var(--text-secondary)" }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="GitHub"
-            >
-              <Github size={18} />
-            </motion.a>
-            <motion.a
-              href="https://linkedin.com/in/usama-saifullah-sethar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-lg transition-colors"
-              style={{ backgroundColor: "var(--tag-bg)", color: "var(--text-secondary)" }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={18} />
-            </motion.a>
-          </div>
-        </motion.div>
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] select-none overflow-hidden z-0">
+         <span 
+           className="text-[18vw] font-black tracking-widest text-transparent whitespace-nowrap" 
+           style={{ WebkitTextStroke: "2px var(--text-primary)" }}
+         >
+            CYBERSEC
+         </span>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ color: "var(--text-muted)" }}
-      >
-        <span
-          className="text-xs tracking-widest uppercase"
-          style={{ fontFamily: "var(--font-jetbrains), monospace" }}
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
+
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-xs font-mono font-semibold tracking-[0.18em] uppercase mb-6"
+          style={{ color: "var(--accent)" }}
         >
-          scroll
-        </span>
-        <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
-          <ArrowDown size={14} />
+          Available for opportunities
+        </motion.span>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-[clamp(3.5rem,10vw,8rem)] font-black leading-[0.9] tracking-tight mb-8"
+        >
+          Usama
+          <br className="sm:hidden" /> Saifullah.
+        </motion.h1>
+
+        {/* ── THE HERO DP (Tied to Navbar via layoutId) ── */}
+        <motion.div
+          layoutId="hero-dp-container"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 20 }}
+          className="relative w-48 h-64 sm:w-64 sm:h-80 md:w-[300px] md:h-[400px] rounded-[100px] sm:rounded-[150px] overflow-hidden mb-10 border-[6px] shadow-2xl z-20"
+          style={{ 
+            borderColor: "var(--bg)", 
+            backgroundColor: "var(--accent)",
+            boxShadow: "0 20px 50px -10px var(--accent)"
+          }}
+        >
+          <motion.img 
+            layoutId="hero-dp-image"
+            src="/dp.webp" 
+            alt="Usama Saifullah" 
+            className="w-full h-full object-cover object-center mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
+          />
         </motion.div>
-      </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="h-8 flex items-center justify-center mb-6"
+        >
+          <span className="text-lg sm:text-xl font-mono font-bold" style={{ color: "var(--accent)" }}>
+            {typedText}
+            <span className="inline-block ml-1 w-2 h-5 align-middle animate-pulse" style={{ backgroundColor: "var(--accent)" }} />
+          </span>
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-base sm:text-lg leading-relaxed max-w-2xl mb-10"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          Building secure systems, configuring networks, and leveraging AI to solve complex technical challenges. Based in Shikarpur, Sindh.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-wrap justify-center gap-4"
+        >
+          <a 
+            href="#projects" 
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm transition-transform hover:scale-105"
+            style={{ backgroundColor: "var(--text-primary)", color: "var(--bg)" }}
+          >
+            View Projects <ChevronRight size={18} />
+          </a>
+          <a 
+            href="/resume.pdf" 
+            target="_blank" 
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm border transition-colors hover:bg-white/5"
+            style={{ borderColor: "var(--text-secondary)", color: "var(--text-primary)" }}
+          >
+            <FileText size={18} /> Download CV
+          </a>
+        </motion.div>
+
+      </div>
     </section>
   );
 }
