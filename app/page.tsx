@@ -8,9 +8,7 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <main
-      style={{ backgroundColor: "var(--bg)", color: "var(--text-primary)" }}
-    >
+    <main className="w-full flex flex-col items-center justify-center">
       <Navbar />
       <Hero />
       <Projects />
