@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Syne, JetBrains_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
+import { Analytics } from "@vercel/analytics/next"
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-body", display: "swap" });
