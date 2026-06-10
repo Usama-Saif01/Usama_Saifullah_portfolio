@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Syne, JetBrains_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -29,7 +29,6 @@ export const metadata: Metadata = {
     description: "IT Technical Support Officer specializing in Linux Administration, Network Security, and AI/ML systems.",
     images: ["/dp.webp"],
   },
-  // 👇 The updated favicon links!
   icons: { icon: "/logo.png", apple: "/logo.png" },
 };
 
@@ -69,6 +68,10 @@ export default function RootLayout({
             {children}
           </div>
         </Providers>
+        
+        {/* 👇 FIX: Actually injecting the Analytics component into the page! */}
+        <Analytics />
+        
       </body>
     </html>
   );
