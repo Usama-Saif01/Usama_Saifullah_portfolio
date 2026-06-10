@@ -44,3 +44,12 @@ Make sure you have Node.js (v18.x or later) and npm installed on your machine.
 1. Clone the repository:
    ```bash
    git clone [https://github.com/Usama-Saif01/Usama_Saifullah_portfolio.git](https://github.com/Usama-Saif01/Usama_Saifullah_portfolio.git)
+
+## 📬 Connect With Me
+ - **LinkedIn:** Usama Saifullah
+
+- **GitHub:** @Usama-Saif01
+
+- **Email:** usamasaif01@gmail.com
+
+**Designed and engineered by Usama Saifullah.**
