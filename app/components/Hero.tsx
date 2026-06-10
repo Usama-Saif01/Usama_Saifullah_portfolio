@@ -117,7 +117,7 @@ export default function Hero() {
                   src="/dp.webp" 
                   alt="Usama Saifullah"
                   className="w-full h-full object-cover object-center mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
-                  priority="true"
+                  /*priority="true"*/
                 />
               </motion.div>
             )}
