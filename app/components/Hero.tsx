@@ -114,7 +114,7 @@ export default function Hero() {
               >
                 <motion.img
                   layoutId="hero-dp-image"
-                  src="/profile.jpg" 
+                  src="/dp.webp" 
                   alt="Usama Saifullah"
                   className="w-full h-full object-cover object-center mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
                   priority="true"

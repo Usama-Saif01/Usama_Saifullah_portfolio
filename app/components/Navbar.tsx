@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { Sun, Moon, Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const NAV_LINKS = ["Projects", "Skills", "About", "Contact"];
 
@@ -36,9 +37,11 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 sm:px-10 py-4 transition-colors duration-300"
         style={{
-          backgroundColor: isScrolled ? "var(--nav-bg)" : "transparent",
+          // 👇 FIX: Replaced "transparent" with "rgba(0, 0, 0, 0)"
+          backgroundColor: isScrolled ? "var(--nav-bg)" : "rgba(0, 0, 0, 0)",
           backdropFilter: isScrolled ? "blur(12px)" : "none",
-          borderBottom: isScrolled ? "1px solid var(--border)" : "1px solid transparent",
+          // 👇 FIX: Replaced "transparent" with "rgba(0, 0, 0, 0)"
+          borderBottom: isScrolled ? "1px solid var(--border)" : "1px solid rgba(0, 0, 0, 0)",
         }}
       >
         <div className="flex items-center">
@@ -46,7 +49,7 @@ export default function Navbar() {
             {isScrolled && (
               <motion.div
                 layoutId="hero-dp-container"
-                className="flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer shadow-lg"
+                className="flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer shadow-lg relative"
                 style={{ 
                   width: 36, height: 36, marginRight: 12, borderRadius: "50%",
                   border: "2px solid var(--accent)", backgroundColor: "var(--accent)"
@@ -56,11 +59,12 @@ export default function Navbar() {
                 onClick={scrollToTop}
                 title="Back to top"
               >
-                <motion.img
-                  layoutId="hero-dp-image"
+                <Image
                   src="/dp.webp" 
                   alt="Usama Saifullah"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="36px"
+                  className="object-cover"
                 />
               </motion.div>
             )}

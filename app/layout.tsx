@@ -1,17 +1,35 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, JetBrains_Mono, DM_Sans } from "next/font/google"; // 1. Ensure these imports are present
+import { Syne, JetBrains_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
 
-// 2. DEFINE CONSTANTS AT THE TOP LEVEL (OUTSIDE OF RootLayout)
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Usama Saifullah | Portfolio",
-  description: "Portfolio of Usama Saifullah — IT Technical Support specialist and Cybersecurity enthusiast.",
-  icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
+  metadataBase: new URL("https://usamasaifullah.cloud"),
+  title: "Usama Saifullah | IT & Cybersecurity Professional",
+  description: "Portfolio of Usama Saifullah — IT Technical Support specialist, Cybersecurity enthusiast, and aspiring IT Auditor specializing in Linux Administration, Network Security, and AI.",
+  keywords: ["IT Support", "Linux Administration", "Network Security", "AI", "Cybersecurity", "Usama Saifullah", "Portfolio", "Sindh", "Pakistan"],
+  authors: [{ name: "Usama Saifullah" }],
+  openGraph: {
+    title: "Usama Saifullah | IT & Cybersecurity",
+    description: "Building secure systems, configuring networks, and leveraging AI to solve complex technical challenges.",
+    url: "https://usamasaifullah.cloud",
+    siteName: "Usama Saifullah Portfolio",
+    images: [{ url: "/dp.webp", width: 800, height: 800, alt: "Usama Saifullah" }],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Usama Saifullah | IT & Cybersecurity",
+    description: "IT Technical Support Officer specializing in Linux Administration, Network Security, and AI/ML systems.",
+    images: ["/dp.webp"],
+  },
+  // 👇 The updated favicon links!
+  icons: { icon: "/logo.png", apple: "/logo.png" },
 };
 
 export const viewport: Viewport = {
@@ -25,7 +43,6 @@ export default function RootLayout({
   return (
     <html 
       lang="en" 
-      /* 3. Now these variables are defined and accessible */
       className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable} scroll-smooth`} 
       suppressHydrationWarning
     >

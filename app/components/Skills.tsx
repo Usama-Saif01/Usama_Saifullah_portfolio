@@ -45,7 +45,7 @@ export default function Skills() {
           
           const offset = i - 1.5;
           const defaultRotate = offset * 6; 
-          const defaultX = offset * 280;    
+          const defaultX = offset * 300;    
           const defaultY = Math.abs(offset) * 16; 
 
           let targetX = isDesktop ? defaultX : 0;
@@ -78,9 +78,10 @@ export default function Skills() {
                   x: targetX,
                   y: targetY,
                   zIndex: targetZ,
-                  backgroundColor: isHovered && isDesktop ? "var(--bg-card)" : "transparent",
+                  // 👇 Bug fixed right here!
+                  backgroundColor: isHovered && isDesktop ? "var(--bg-card)" : "rgba(0, 0, 0, 0)",
                   borderColor: isHovered ? category.color : "var(--border)",
-                  boxShadow: isHovered ? `0 25px 50px -12px ${category.color}40` : "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
+                  boxShadow: isHovered ? `0 25px 50px -12px ${category.color}40` : "0 4px 6px -1px rgba(0, 0, 0, 0)",
                 } : {}
               }
               transition={{ type: "spring", stiffness: 280, damping: 25 }}

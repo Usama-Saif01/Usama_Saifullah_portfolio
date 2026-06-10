@@ -11,7 +11,6 @@ const GithubIcon = (props: any) => (
   </svg>
 );
 
-// 👇 Restored Descriptions and GitHub links!
 const projects = [
   {
     title: "TurtleBot3 Enhanced Navigation",
@@ -75,7 +74,7 @@ export default function Projects() {
 
           const offset = i - 1.5;
           const defaultRotate = offset * 6; 
-          const defaultX = offset * 280; // 👈 Widened spacing applied here
+          const defaultX = offset * 300; 
           const defaultY = Math.abs(offset) * 16; 
 
           let targetX = isDesktop ? defaultX : 0;
@@ -91,7 +90,7 @@ export default function Projects() {
               targetScale = 1.05;
               targetZ = 50;
             } else {
-              if (i < hoveredIndex) targetX = defaultX - 60; // 👈 Pushes cards further away
+              if (i < hoveredIndex) targetX = defaultX - 60; 
               if (i > hoveredIndex) targetX = defaultX + 60;
             }
           }
@@ -108,9 +107,9 @@ export default function Projects() {
                   x: targetX,
                   y: targetY,
                   zIndex: targetZ,
-                  backgroundColor: isHovered && isDesktop ? "var(--bg-card)" : "transparent",
+                  backgroundColor: isHovered && isDesktop ? "var(--bg-card)" : "rgba(0, 0, 0, 0)",
                   borderColor: isHovered ? project.color : "var(--border)",
-                  boxShadow: isHovered ? `0 25px 50px -12px ${project.color}40` : "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
+                  boxShadow: isHovered ? `0 25px 50px -12px ${project.color}40` : "0 4px 6px -1px rgba(0, 0, 0, 0)",
                 } : {}
               }
               transition={{ type: "spring", stiffness: 280, damping: 25 }}
