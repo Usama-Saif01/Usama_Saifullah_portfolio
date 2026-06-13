@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { ChevronRight, FileText, ArrowDown } from "lucide-react";
 
 // Custom SVG Icons
@@ -112,13 +113,16 @@ export default function Hero() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ type: "spring", stiffness: 200, damping: 25 }}
               >
-                <motion.img
-                  layoutId="hero-dp-image"
-                  src="/dp.webp" 
-                  alt="Usama Saifullah"
-                  className="w-full h-full object-cover object-center mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
-                  /*priority="true"*/
-                />
+                <motion.div layoutId="hero-dp-image" className="w-full h-full relative">
+                  <Image
+                    src="/dp.webp" 
+                    alt="Usama Saifullah"
+                    className="w-full h-full object-cover object-center mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
+                    width={500}
+                    height={500}
+                    priority={true}
+                  />
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>

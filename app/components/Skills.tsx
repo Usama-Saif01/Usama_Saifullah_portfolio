@@ -6,7 +6,10 @@ import { Shield, Brain, Bot, Code } from "lucide-react";
 
 const skillCategories = [
   { title: "Cybersecurity & Systems", subtitle: "OS Hardening & Networks", icon: Shield, description: "Securing infrastructure and managing advanced server environments.", skills: ["Kali Linux", "Windows Server", "Network Security", "DNS / DHCP / FTP", "Vulnerability Management", "IT Audit Frameworks"], color: "#8b5cf6" },
-  { title: "AI & Deep Learning", subtitle: "Neural Networks & Vision", icon: Brain, description: "Designing and training models for complex image recognition tasks.", skills: ["Python", "TensorFlow & Keras", "Convolutional Neural Networks (CNN)", "Medical AI Imaging", "OpenCV", "Data Preprocessing"], color: "#0ea5e9" },
+  
+  // 👇 Updated AI Section with Prompt Engineering
+  { title: "AI & Deep Learning", subtitle: "Neural Networks & Vision", icon: Brain, description: "Designing models for complex image recognition and optimizing AI-driven workflows.", skills: ["Python", "TensorFlow & Keras", "Convolutional Neural Networks (CNN)", "Medical AI Imaging", "Data Preprocessing", "Prompt Engineering"], color: "#0ea5e9" },
+  
   { title: "Robotics & Autonomous", subtitle: "ROS & Pathfinding", icon: Bot, description: "Engineering navigation systems for autonomous robots in complex environments.", skills: ["ROS Noetic", "A* Algorithm", "TurtleBot3", "LiDAR & Odometry", "Dynamic Obstacle Avoidance", "Gazebo Simulation"], color: "#10b981" },
   { title: "Web & Development", subtitle: "Modern Frontend Stack", icon: Code, description: "Building responsive, high-performance portfolios and web applications.", skills: ["Next.js", "React", "Tailwind CSS", "TypeScript", "Framer Motion", "Git & GitHub"], color: "#f59e0b" }
 ];
@@ -45,7 +48,7 @@ export default function Skills() {
           
           const offset = i - 1.5;
           const defaultRotate = offset * 6; 
-          const defaultX = offset * 300;    
+          const defaultX = offset * 280;    
           const defaultY = Math.abs(offset) * 16; 
 
           let targetX = isDesktop ? defaultX : 0;
@@ -78,7 +81,6 @@ export default function Skills() {
                   x: targetX,
                   y: targetY,
                   zIndex: targetZ,
-                  // 👇 Bug fixed right here!
                   backgroundColor: isHovered && isDesktop ? "var(--bg-card)" : "rgba(0, 0, 0, 0)",
                   borderColor: isHovered ? category.color : "var(--border)",
                   boxShadow: isHovered ? `0 25px 50px -12px ${category.color}40` : "0 4px 6px -1px rgba(0, 0, 0, 0)",

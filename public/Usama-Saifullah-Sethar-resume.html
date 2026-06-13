@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usama Saifullah — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ──────────────── RESET & BASE ──────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #07111D;
+      --surface:      #0C1929;
+      --card:         #101F30;
+      --card-hover:   #152640;
+      --accent:       #22D3EE;
+      --accent-muted: rgba(34,211,238,.1);
+      --accent-bdr:   rgba(34,211,238,.22);
+      --text:         #E2EAF4;
+      --text-sub:     #90A4B8;
+      --text-dim:     #4A6080;
+      --border:       rgba(255,255,255,.06);
+      --border-strong:rgba(255,255,255,.12);
+      --green:        #34D399;
+      --green-bg:     rgba(52,211,153,.09);
+      --green-bdr:    rgba(52,211,153,.22);
+      --purple:       #A78BFA;
+      --purple-bg:    rgba(167,139,250,.09);
+      --purple-bdr:   rgba(167,139,250,.22);
+      --r:            8px;
+      --r-sm:         4px;
+      --r-lg:         14px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .72; }
+
+    /* ──────────────── LAYOUT ──────────────── */
+    .resume-wrap { max-width: 900px; margin: 0 auto; padding: 0 24px 72px; }
+
+    /* ──────────────── STICKY TOP BAR ──────────────── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,17,29,.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-strong);
+      padding: 11px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .tb-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; opacity: 0; transition: opacity .35s; }
+    .tb-name.visible { opacity: 1; }
+    .tb-actions { display: flex; gap: 8px; align-items: center; }
+
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 15px; border-radius: var(--r-sm); font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: 'Inter', sans-serif; text-decoration: none; transition: all .2s; }
+    .btn-ghost { background: transparent; color: var(--text-sub); border: 1px solid var(--border-strong); }
+    .btn-ghost:hover { background: var(--surface); color: var(--text); opacity: 1; }
+    .btn-primary { background: var(--accent); color: #07111D; font-weight: 600; }
+    .btn-primary:hover { background: #6EE7F7; opacity: 1; }
+
+    /* ──────────────── HERO ──────────────── */
+    .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
+    .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--accent); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: inline-block; width: 26px; height: 1px; background: var(--accent); }
+    .hero-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(38px, 6.5vw, 60px); font-weight: 700; line-height: 1.08; letter-spacing: -.025em; margin-bottom: 10px; background: linear-gradient(130deg, #E2EAF4 0%, #7DA6C4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-title { font-size: 17px; font-weight: 400; color: var(--text-sub); margin-bottom: 30px; }
+    .hero-title em { color: var(--accent); font-style: normal; font-weight: 500; }
+    .contact-row { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+    .ci { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; color: var(--text-sub); transition: color .2s; cursor: pointer; }
+    .ci:hover { color: var(--accent); }
+    .ci a { color: inherit; }
+    .ci svg { width: 14px; height: 14px; opacity: .65; flex-shrink: 0; }
+    .ci-sep { color: var(--text-dim); font-size: 12px; }
+
+    /* ──────────────── SECTION STRUCTURE ──────────────── */
+    .section { margin-bottom: 52px; }
+    .sec-hd { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+    .sec-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--text-dim); flex-shrink: 0; }
+    .sec-title { font-family: 'Space Grotesk', sans-serif; font-size: 18.5px; font-weight: 600; color: var(--text); flex-shrink: 0; }
+    .sec-line { flex: 1; height: 1px; background: var(--border); }
+    .summary-p { font-size: 15.5px; color: var(--text-sub); line-height: 1.8; border-left: 2.5px solid var(--accent); padding-left: 22px; max-width: 740px; }
+
+    /* ──────────────── EXPERIENCE ──────────────── */
+    .exp-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 26px 28px; position: relative; overflow: hidden; }
+    .exp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(180deg, var(--accent) 0%, transparent 100%); }
+    .exp-hd { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .exp-role { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .exp-org { font-size: 13.5px; color: var(--accent); font-weight: 500; }
+    .exp-date { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-dim); background: var(--card); padding: 4px 11px; border-radius: 100px; border: 1px solid var(--border); white-space: nowrap; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .exp-bullets li { font-size: 14.5px; color: var(--text-sub); padding-left: 22px; position: relative; line-height: 1.68; }
+    .exp-bullets li::before { content: '▸'; position: absolute; left: 0; top: 2px; color: var(--accent); font-size: 11px; }
+
+    /* ──────────────── BULLET SELECTOR ──────────────── */
+    .bs-wrap { margin-top: 20px; padding: 18px 20px; background: var(--card); border-radius: var(--r); border: 1px dashed var(--border-strong); }
+    .bs-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 14px; display: flex; align-items: center; gap: 7px; }
+    .bs-opts { display: flex; flex-direction: column; gap: 9px; }
+    .bs-opt { padding: 13px 16px; padding-right: 44px; border-radius: var(--r-sm); border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: all .2s; position: relative; }
+    .bs-opt:hover { border-color: var(--accent-bdr); background: var(--accent-muted); }
+    .bs-opt.active { border-color: var(--accent); background: var(--accent-muted); }
+    .bs-opt-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 5px; }
+    .bs-opt-txt { font-size: 13.5px; color: var(--text-sub); line-height: 1.62; }
+    .bs-opt.active .bs-opt-txt { color: var(--text); }
+    .bs-check { position: absolute; top: 13px; right: 14px; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-size: 10px; transition: all .2s; }
+    .bs-opt.active .bs-check { background: var(--accent); border-color: var(--accent); color: #07111D; }
+    .bs-hint { margin-top: 10px; font-size: 12px; color: var(--text-dim); font-style: italic; }
+
+    /* ──────────────── PROJECTS ──────────────── */
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(370px, 1fr)); gap: 16px; }
+    .proj-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 22px; display: flex; flex-direction: column; gap: 13px; transition: all .22s; }
+    .proj-card:hover { border-color: var(--border-strong); transform: translateY(-3px); box-shadow: 0 10px 36px rgba(0,0,0,.35); }
+    .proj-hd { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .proj-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .proj-links { display: flex; gap: 6px; flex-shrink: 0; }
+    .pl { display: inline-flex; align-items: center; justify-content: center; width: 31px; height: 31px; border-radius: var(--r-sm); background: var(--card); border: 1px solid var(--border); color: var(--text-sub); transition: all .2s; }
+    .pl:hover { background: var(--accent-muted); border-color: var(--accent-bdr); color: var(--accent); opacity: 1; }
+    .pl svg { width: 15px; height: 15px; }
+    .proj-desc { font-size: 13.5px; color: var(--text-sub); line-height: 1.65; flex: 1; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 3px 10px; border-radius: 100px; font-weight: 500; white-space: nowrap; }
+    .t-blue   { background: var(--accent-muted);  color: var(--accent);  border: 1px solid var(--accent-bdr); }
+    .t-green  { background: var(--green-bg);       color: var(--green);   border: 1px solid var(--green-bdr); }
+    .t-purple { background: var(--purple-bg);      color: var(--purple);  border: 1px solid var(--purple-bdr); }
+
+    /* ──────────────── SKILLS ──────────────── */
+    .skills-list { display: flex; flex-direction: column; gap: 18px; }
+    .sg { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+    .sg-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; min-width: 168px; padding-top: 4px; flex-shrink: 0; }
+    .sg-tags { display: flex; flex-wrap: wrap; gap: 7px; flex: 1; }
+
+    /* ──────────────── EDUCATION ──────────────── */
+    .edu-timeline { border-left: 1px solid var(--border-strong); padding-left: 26px; margin-left: 10px; display: flex; flex-direction: column; gap: 0; }
+    .edu-item { position: relative; padding-bottom: 30px; }
+    .edu-item:last-child { padding-bottom: 0; }
+    .edu-item::before { content: ''; position: absolute; left: -31px; top: 6px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--accent); background: var(--bg); }
+    .edu-item:first-child::before { background: var(--accent); }
+    .edu-deg { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .edu-inst { font-size: 13.5px; color: var(--text-sub); margin-bottom: 5px; }
+    .edu-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .edu-date { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-dim); }
+    .badge { font-size: 11px; padding: 2px 9px; border-radius: 100px; font-weight: 500; }
+    .badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bdr); }
+
+    /* ──────────────── CERTIFICATIONS ──────────────── */
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 12px; }
+    .cert-card { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); transition: all .22s; text-decoration: none; color: inherit; }
+    .cert-card[href]:hover { border-color: var(--accent-bdr); background: var(--accent-muted); opacity: 1; }
+    .cert-ico { width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ico-google  { background: rgba(66,133,244,.15); }
+    .ico-course  { background: rgba(0,86,210,.12); }
+    .ico-local   { background: var(--card); }
+    .cert-info { flex: 1; min-width: 0; }
+    .cert-name { font-size: 13.5px; font-weight: 500; color: var(--text); margin-bottom: 3px; line-height: 1.4; }
+    .cert-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
+    .cert-arrow { color: var(--text-dim); font-size: 13px; flex-shrink: 0; align-self: center; transition: color .2s; }
+    .cert-card[href]:hover .cert-arrow { color: var(--accent); }
+
+    /* ──────────────── TOAST ──────────────── */
+    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(70px); background: var(--accent); color: #07111D; padding: 10px 22px; border-radius: 100px; font-size: 13px; font-weight: 600; transition: transform .32s cubic-bezier(.34,1.56,.64,1); z-index: 999; white-space: nowrap; pointer-events: none; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ──────────────── ANIMATIONS ──────────────── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .section { animation: fadeUp .5s ease both; }
+
+    /* ──────────────── RESPONSIVE ──────────────── */
+    @media (max-width: 640px) {
+      .proj-grid { grid-template-columns: 1fr; }
+      .sg { flex-direction: column; gap: 8px; }
+      .sg-label { min-width: unset; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .exp-hd { flex-direction: column; }
+      .hero { padding: 36px 0 28px; }
+      .contact-row { gap: 6px 12px; }
+    }
+
+    /* ──────────────── PRINT ──────────────── */
+    @media print {
+      /* 👇 FIX: Completely reset the page to forbid browser headers from having space */
+      @page {
+        size: A4 portrait;
+        margin: 0; 
+      }
+      
+      :root {
+        --bg: #fff; --surface: #f7f8fa; --card: #eef0f3;
+        --text: #111; --text-sub: #444; --text-dim: #777;
+        --accent: #0056CC; --accent-muted: rgba(0,86,204,.05); --accent-bdr: rgba(0,86,204,.2);
+        --border: #dde1e7; --border-strong: #c8cdd5;
+        --green: #1a7f4e; --green-bg: rgba(26,127,78,.07); --green-bdr: rgba(26,127,78,.2);
+        --purple: #5b3fa6; --purple-bg: rgba(91,63,166,.07); --purple-bdr: rgba(91,63,166,.2);
+      }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important; }
+      
+      /* 👇 FIX: Add margin back to the body since we stripped it from @page to kill headers */
+      body { font-size: 13px; padding: 1.5cm; }
+      
+      /* 👇 FIX: Aggressively murder the top bar and interactive tools so no ghost shapes appear */
+      .top-bar, .bs-wrap, .toast { display: none !important; opacity: 0 !important; visibility: hidden !important; }
+      
+      .hero { padding-top: 0; }
+      
+      /* 👇 FIX: Force the transparent gradient name to be solid black */
+      .hero-name {
+        -webkit-text-fill-color: var(--text) !important;
+        background: none !important;
+        color: #111 !important;
+      }
+      
+      /* 👇 FIX: Tell the browser it is ILLEGAL to cut cards in half across pages */
+      .section { page-break-inside: auto; break-inside: auto; }
+      .exp-card, .proj-card, .cert-card, .sg, .edu-item { 
+        page-break-inside: avoid !important; 
+        break-inside: avoid !important; 
+      }
+      .sec-hd { page-break-after: avoid !important; break-after: avoid !important; }
+
+      .proj-card:hover { transform: none; box-shadow: none; }
+      .resume-wrap { max-width: 100%; padding: 0; margin: 0; }
+      .section { animation: none; }
+      .exp-card::before { background: var(--accent) !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span class="tb-name" id="tbName">Usama Saifullah</span>
+  <div class="tb-actions">
+    <a href="https://linkedin.com/in/usama-saifullah-sethar" target="_blank" class="btn btn-ghost">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <button class="btn btn-primary" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / Save PDF
+    </button>
+  </div>
+</div>
+
+<div class="resume-wrap">
+
+  <header class="hero" id="heroEl">
+    <div class="hero-eyebrow">Open to Opportunities</div>
+    <h1 class="hero-name">Usama Saifullah</h1>
+    <p class="hero-title">
+      IT Graduate &amp; <em>Cybersecurity Professional</em> — Web Developer &amp; ML Engineer
+    </p>
+
+    <div class="contact-row">
+      <span class="ci" onclick="copyText('+92 311-1998818','Phone number copied!')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.5 10.5 19.79 19.79 0 011.2 2H4a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L5.09 9.1a16 16 0 006.29 6.29l1.42-1.42a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +92 311-1998818
+      </span>
+      <span class="ci-sep">·</span>
+      <span class="ci">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Shikarpur, Sindh, Pakistan
+      </span>
+      <span class="ci-sep">·</span>
+      <span class="ci">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        <a href="https://usamasaifullah.cloud" target="_blank">usamasaifullah.cloud</a>
+      </span>
+      <span class="ci-sep">·</span>
+      <span class="ci">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        <a href="https://linkedin.com/in/usama-saifullah-sethar" target="_blank">LinkedIn</a>
+      </span>
+      <span class="ci-sep">·</span>
+      <span class="ci">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        <a href="https://github.com/Usama-Saif01" target="_blank">GitHub</a>
+      </span>
+    </div>
+  </header>
+
+  <section class="section" id="s-summary">
+    <div class="sec-hd">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Professional Summary</h2>
+      <div class="sec-line"></div>
+    </div>
+    <p class="summary-p">
+      IT graduate and Google-certified Cybersecurity professional with 3+ years of hands-on experience
+      in technical support, network administration, and secure web development. Proven ability to
+      diagnose and resolve complex hardware, software, and network issues, enforce organizational
+      security protocols, and deliver robust technology solutions in fast-paced academic environments.
+      Adept in Python, React, and machine learning with additional expertise in autonomous robotics
+      systems using ROS Noetic.
+    </p>
+  </section>
+
+  <section class="section" id="s-exp">
+    <div class="sec-hd">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Professional Experience</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-hd">
+        <div>
+          <div class="exp-role">Peer Technical Support Specialist</div>
+          <div class="exp-org">The Shaikh Ayaz University, Shikarpur</div>
+        </div>
+        <div class="exp-date">2022 – 2025</div>
+      </div>
+
+      <ul class="exp-bullets" id="bulletList">
+        <li>Collaborated directly with academic staff and 200+ students to diagnose and resolve hardware, software, and network connectivity issues, maintaining high user satisfaction and minimal system downtime across educational platforms.</li>
+        <li>Provided comprehensive technical guidance and training on institutional IT systems, proactively identifying recurring failure points and documenting resolution procedures to reduce repeat support requests.</li>
+        <li id="chosenBullet"></li>
+      </ul>
+
+      <div class="bs-wrap">
+        <div class="bs-label">
+          <span>⚡</span> Choose Your 3rd Bullet Point
+        </div>
+        <div class="bs-opts">
+          <div class="bs-opt active" onclick="chooseBullet(0)">
+            <div class="bs-opt-num">Option A — Ticketing &amp; Resolution</div>
+            <div class="bs-opt-txt">Logged, triaged, and resolved 100+ technical support tickets through systematic issue tracking and prioritization, consistently achieving same-day resolution for critical academic system failures and reducing average ticket backlog by 40%.</div>
+            <div class="bs-check">✓</div>
+          </div>
+          <div class="bs-opt" onclick="chooseBullet(1)">
+            <div class="bs-opt-num">Option B — Cybersecurity &amp; Compliance</div>
+            <div class="bs-opt-txt">Enforced campus-wide cybersecurity protocols by monitoring network access logs, applying timely security patches, and delivering security awareness sessions to 200+ students and staff, ensuring full compliance with institutional IT security policies.</div>
+            <div class="bs-check">✓</div>
+          </div>
+          <div class="bs-opt" onclick="chooseBullet(2)">
+            <div class="bs-opt-num">Option C — IT Asset Management</div>
+            <div class="bs-opt-txt">Maintained and audited an inventory of 50+ university-owned hardware assets and software licenses, enforcing compliance with institutional IT policies and streamlining resource allocation to eliminate procurement redundancies across academic departments.</div>
+            <div class="bs-check">✓</div>
+          </div>
+        </div>
+        <p class="bs-hint">Click an option to preview it live in the resume above. This selector is hidden when you print.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="s-proj">
+    <div class="sec-hd">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-hd">
+          <div class="proj-name">TurtleBot3 Enhanced Navigation System</div>
+          <div class="proj-links">
+            <a href="https://github.com/Usama-Saif01/turtlebot3_enhanced_nav" target="_blank" class="pl" title="View on GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            </a>
+          </div>
+        </div>
+        <p class="proj-desc">Engineered an autonomous navigation system utilizing ROS Noetic for real-time pathfinding and obstacle avoidance, enabling efficient and reliable navigation in dynamic environments.</p>
+        <div class="proj-tags">
+          <span class="tag t-purple">ROS Noetic</span>
+          <span class="tag t-blue">Python</span>
+          <span class="tag t-purple">Autonomous Systems</span>
+          <span class="tag t-green">Robotics</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-hd">
+          <div class="proj-name">Face Emotion Recognition System</div>
+          <div class="proj-links">
+            <a href="https://github.com/Usama-Saif01/Face-Emotion-Recognition" target="_blank" class="pl" title="View on GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            </a>
+          </div>
+        </div>
+        <p class="proj-desc">Developed a real-time facial emotion recognition application using Convolutional Neural Networks (CNNs) and Python, capable of detecting and classifying multiple emotional states from live video streams.</p>
+        <div class="proj-tags">
+          <span class="tag t-blue">Python</span>
+          <span class="tag t-purple">CNNs</span>
+          <span class="tag t-purple">Computer Vision</span>
+          <span class="tag t-green">Deep Learning</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-hd">
+          <div class="proj-name">Bank Loan Prediction Model</div>
+          <div class="proj-links"></div>
+        </div>
+        <p class="proj-desc">Developed a machine learning classification model using Python, executing rigorous data preprocessing, feature engineering, and statistical integrity analysis to accurately predict loan approval outcomes.</p>
+        <div class="proj-tags">
+          <span class="tag t-blue">Python</span>
+          <span class="tag t-green">Machine Learning</span>
+          <span class="tag t-blue">Pandas</span>
+          <span class="tag t-green">Data Science</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-hd">
+          <div class="proj-name">Learning Management System (LMS)</div>
+          <div class="proj-links"></div>
+        </div>
+        <p class="proj-desc">Built a secure, role-based web application with robust user authentication, granular access controls, and comprehensive course management features, following a security-first architecture.</p>
+        <div class="proj-tags">
+          <span class="tag t-blue">React</span>
+          <span class="tag t-blue">Next.js</span>
+          <span class="tag t-green">Authentication</span>
+          <span class="tag t-purple">RBAC</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-hd">
+          <div class="proj-name">Interactive Professional Portfolio</div>
+          <div class="proj-links">
+            <a href="https://github.com/Usama-Saif01/Usama_Saifullah_portfolio" target="_blank" class="pl" title="View on GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            </a>
+            <a href="https://usamasaifullah.cloud" target="_blank" class="pl" title="View Live Site">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+        <p class="proj-desc">Designed and deployed a responsive, high-performance personal portfolio website showcasing technical projects, skills, and professional experience using modern front-end technologies.</p>
+        <div class="proj-tags">
+          <span class="tag t-blue">React</span>
+          <span class="tag t-blue">Next.js</span>
+          <span class="tag t-blue">Tailwind CSS</span>
+          <span class="tag t-green">Deployed ↗</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="s-skills">
+    <div class="sec-hd">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Technical Skills</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="skills-list">
+      <div class="sg">
+        <span class="sg-label">Cybersecurity &amp; IT</span>
+        <div class="sg-tags">
+          <span class="tag t-blue">Network Administration</span>
+          <span class="tag t-blue">Vulnerability Management</span>
+          <span class="tag t-blue">Information Security</span>
+          <span class="tag t-blue">IT Support &amp; Troubleshooting</span>
+          <span class="tag t-blue">Security Protocols</span>
+          <span class="tag t-blue">Incident Response</span>
+        </div>
+      </div>
+      <div class="sg">
+        <span class="sg-label">Programming &amp; Web</span>
+        <div class="sg-tags">
+          <span class="tag t-green">Python</span>
+          <span class="tag t-green">JavaScript</span>
+          <span class="tag t-green">React</span>
+          <span class="tag t-green">Next.js</span>
+          <span class="tag t-green">Tailwind CSS</span>
+          <span class="tag t-green">HTML / CSS</span>
+        </div>
+      </div>
+      <div class="sg">
+        <span class="sg-label">ML &amp; Robotics</span>
+        <div class="sg-tags">
+          <span class="tag t-purple">Convolutional Neural Networks</span>
+          <span class="tag t-purple">ROS Noetic</span>
+          <span class="tag t-purple">Autonomous Systems</span>
+          <span class="tag t-purple">Computer Vision</span>
+          <span class="tag t-purple">Matplotlib</span>
+          <span class="tag t-purple">Data Analysis</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="s-edu">
+    <div class="sec-hd">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Education</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="edu-timeline">
+
+      <div class="edu-item">
+        <div class="edu-deg">Bachelor of Science in Information Technology (BSIT)</div>
+        <div class="edu-inst">The Shaikh Ayaz University, Shikarpur</div>
+        <div class="edu-meta">
+          <span class="edu-date">2022 – 2025</span>
+          <span class="badge badge-green">Completed</span>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-deg">Bachelor of Science — B.Sc (Pass)</div>
+        <div class="edu-inst">Shah Abdul Latif University</div>
+        <div class="edu-meta">
+          <span class="edu-date">2018 – 2021</span>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-deg">Intermediate — Pre-Medical</div>
+        <div class="edu-inst">C &amp; S Degree College, Shikarpur</div>
+        <div class="edu-meta">
+          <span class="edu-date">Mar 2017 – Nov 2018</span>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-deg">Matriculation — Science</div>
+        <div class="edu-inst">Qazi Habibullah School, Shikarpur</div>
+        <div class="edu-meta">
+          <span class="edu-date">Jan 2015 – Dec 2016</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="s-certs">
+    <div class="sec-hd">
+      <span class="sec-num">06</span>
+      <h2 class="sec-title">Certifications</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="cert-grid">
+
+      <a class="cert-card" href="https://coursera.org/share/85e382fda475cf161411b4adb39b6710" target="_blank">
+        <div class="cert-ico ico-google"></div>
+        <div class="cert-info">
+          <div class="cert-name">Google Cybersecurity Professional Certificate</div>
+          <div class="cert-meta">Google · Coursera · Oct 2025</div>
+        </div>
+        <span class="cert-arrow">↗</span>
+      </a>
+
+      <a class="cert-card" href="https://coursera.org/share/020483d8ab4b3b509be8141d2b510e7d" target="_blank">
+        <div class="cert-ico ico-google"></div>
+        <div class="cert-info">
+          <div class="cert-name">Google Prompting Essentials Specialization</div>
+          <div class="cert-meta">Google · Coursera · 2025</div>
+        </div>
+        <span class="cert-arrow">↗</span>
+      </a>
+
+      <div class="cert-card">
+        <div class="cert-ico ico-course"></div>
+        <div class="cert-info">
+          <div class="cert-name">Visualization in Python (Matplotlib)</div>
+          <div class="cert-meta">Coursera</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-ico ico-local"></div>
+        <div class="cert-info">
+          <div class="cert-name">1-Year Diploma in Information Technology</div>
+          <div class="cert-meta">HMB Institute · 2021</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-ico ico-local"></div>
+        <div class="cert-info">
+          <div class="cert-name">Certificate in Information Technology (CIT)</div>
+          <div class="cert-meta">Mehran Center · 2016</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><div class="toast" id="toast"></div>
+
+<script>
+  /* ── Sticky name reveal ── */
+  const tbName = document.getElementById('tbName');
+  const heroEl = document.getElementById('heroEl');
+  const obs = new IntersectionObserver(([e]) => {
+    tbName.classList.toggle('visible', !e.isIntersecting);
+  }, { threshold: 0.05 });
+  obs.observe(heroEl);
+
+  /* ── Bullet selector ── */
+  const bulletTexts = [
+    "Logged, triaged, and resolved 100+ technical support tickets through systematic issue tracking and prioritization, consistently achieving same-day resolution for critical academic system failures and reducing average ticket backlog by 40%.",
+    "Enforced campus-wide cybersecurity protocols by monitoring network access logs, applying timely security patches, and delivering security awareness sessions to 200+ students and staff, ensuring full compliance with institutional IT security policies.",
+    "Maintained and audited an inventory of 50+ university-owned hardware assets and software licenses, enforcing compliance with institutional IT policies and streamlining resource allocation to eliminate procurement redundancies across academic departments."
+  ];
+
+  function chooseBullet(idx) {
+    document.querySelectorAll('.bs-opt').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+    const li = document.getElementById('chosenBullet');
+    li.textContent = bulletTexts[idx];
+    li.style.display = 'block';
+  }
+  chooseBullet(0); // default selection
+
+  /* ── Copy to clipboard ── */
+  function copyText(text, msg) {
+    navigator.clipboard.writeText(text).then(() => showToast('📋 ' + msg));
+  }
+
+  /* ── Toast ── */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._tid);
+    t._tid = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+</script>
+
+</body>
+</html>

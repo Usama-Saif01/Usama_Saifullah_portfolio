@@ -29,8 +29,26 @@ export const metadata: Metadata = {
     description: "IT Technical Support Officer specializing in Linux Administration, Network Security, and AI/ML systems.",
     images: ["/dp.webp"],
   },
-  icons: { icon: "/logo.png", apple: "/logo.png" },
+  //icons: { icon: "/icon_dark.png", apple: "/icon_dark.png" },
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/icon-light.png',
+        href: '/icon-light.png',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/icon-dark.png',
+        href: '/icon-dark.png',
+      },
+    ],
+    // It is great that you added the Apple touch icon! 
+    // Apple devices usually prefer a single static icon, so leaving it tied to the dark one is a smart move.
+    apple: "/icon_dark.png", 
+  },
 };
+
 
 export const viewport: Viewport = {
   width: "device-width",
