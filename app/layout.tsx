@@ -3,6 +3,7 @@ import { Syne, JetBrains_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -29,7 +30,6 @@ export const metadata: Metadata = {
     description: "IT Technical Support Officer specializing in Linux Administration, Network Security, and AI/ML systems.",
     images: ["/dp.webp"],
   },
-  //icons: { icon: "/icon_dark.png", apple: "/icon_dark.png" },
   icons: {
     icon: [
       {
@@ -43,10 +43,9 @@ export const metadata: Metadata = {
         href: '/icon-dark.png',
       },
     ],
-    apple: "/icon_dark.png", 
+    apple: "/icon-dark.png", 
   },
 };
-
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -85,8 +84,9 @@ export default function RootLayout({
           </div>
         </Providers>
         
-        {/* Vercel Analytics */}
+        {/* Vercel Performance & Analytics Monitoring */}
         <Analytics />
+        <SpeedInsights />
         
       </body>
     </html>
