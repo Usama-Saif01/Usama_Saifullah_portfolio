@@ -9,7 +9,6 @@ const educationList = [
   { year: "2022", title: "B.Sc. (Pass)", org: "Shah Abdul Latif University", icon: BookOpen, desc: "Foundational sciences and computing curriculum providing strong analytical and mathematical skills.", color: "#f59e0b" }, 
 ];
 
-// 👇 Live Coursera Verification Links Added!
 const certificationList = [
   { 
     year: "2025", 

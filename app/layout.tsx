@@ -43,8 +43,6 @@ export const metadata: Metadata = {
         href: '/icon-dark.png',
       },
     ],
-    // It is great that you added the Apple touch icon! 
-    // Apple devices usually prefer a single static icon, so leaving it tied to the dark one is a smart move.
     apple: "/icon_dark.png", 
   },
 };
@@ -87,7 +85,7 @@ export default function RootLayout({
           </div>
         </Providers>
         
-        {/* 👇 FIX: Actually injecting the Analytics component into the page! */}
+        {/* Vercel Analytics */}
         <Analytics />
         
       </body>

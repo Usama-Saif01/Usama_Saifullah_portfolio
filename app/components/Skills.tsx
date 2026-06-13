@@ -7,7 +7,6 @@ import { Shield, Brain, Bot, Code } from "lucide-react";
 const skillCategories = [
   { title: "Cybersecurity & Systems", subtitle: "OS Hardening & Networks", icon: Shield, description: "Securing infrastructure and managing advanced server environments.", skills: ["Kali Linux", "Windows Server", "Network Security", "DNS / DHCP / FTP", "Vulnerability Management", "IT Audit Frameworks"], color: "#8b5cf6" },
   
-  // 👇 Updated AI Section with Prompt Engineering
   { title: "AI & Deep Learning", subtitle: "Neural Networks & Vision", icon: Brain, description: "Designing models for complex image recognition and optimizing AI-driven workflows.", skills: ["Python", "TensorFlow & Keras", "Convolutional Neural Networks (CNN)", "Medical AI Imaging", "Data Preprocessing", "Prompt Engineering"], color: "#0ea5e9" },
   
   { title: "Robotics & Autonomous", subtitle: "ROS & Pathfinding", icon: Bot, description: "Engineering navigation systems for autonomous robots in complex environments.", skills: ["ROS Noetic", "A* Algorithm", "TurtleBot3", "LiDAR & Odometry", "Dynamic Obstacle Avoidance", "Gazebo Simulation"], color: "#10b981" },
