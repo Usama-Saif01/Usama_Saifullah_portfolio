@@ -1,157 +1,98 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Mail, ArrowUpRight, Send } from "lucide-react";
-
-// Custom SVG Icons for Brands
-const GithubIcon = (props: any) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-  </svg>
-);
-
-const LinkedinIcon = (props: any) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-    <rect x="2" y="9" width="4" height="12"></rect>
-    <circle cx="4" cy="4" r="2"></circle>
-  </svg>
-);
-
-// Added distinct brand colors for the glow effects
-const contactLinks = [
-  { label: "Email", value: "usamasethar1@gmail.com", href: "mailto:usamasethar1@gmail.com", icon: Mail, color: "#ea580c" }, // Orange matches your accent
-  { label: "GitHub", value: "Usama-Saif01", href: "https://github.com/Usama-Saif01", icon: GithubIcon, color: "#8b5cf6" }, // Violet to match your tech stack
-  { label: "LinkedIn", value: "usama-saifullah-sethar", href: "https://linkedin.com/in/usama-saifullah-sethar", icon: LinkedinIcon, color: "#0a66c2" }, // Official LinkedIn Blue
-];
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function Contact() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  
-  // Track hover state for the glassmorphism glow effect
-  const [hoveredLink, setHoveredLink] = useState<number | null>(null);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("submitting");
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      botcheck: formData.get("botcheck"), // Our hidden honeypot
+    };
+
+    try {
+      // 👇 Pointing to our custom Next.js API Route!
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        e.currentTarget.reset();
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch (error) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
+  };
 
   return (
-    <section id="contact" ref={ref} className="py-28 px-6 w-full bg-[var(--bg)] border-t border-[var(--border)] relative overflow-hidden">
-      <div className="max-w-6xl mx-auto relative z-10">
-        
-        {/* Header Section */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16">
-          <div className="flex items-center gap-4 mb-4">
-            <span className="text-xs font-medium tracking-widest uppercase text-[var(--accent)] font-[var(--font-jetbrains)]">04 / Contact</span>
-            <div className="h-px flex-1 max-w-[60px] bg-[var(--border)]" />
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)] font-[var(--font-syne)]">
-            Let&apos;s Connect
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          {/* LEFT COLUMN: Text & Main CTA */}
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, ease: "easeOut" }}>
-            <p className="text-lg sm:text-xl leading-relaxed mb-8 text-[var(--text-secondary)]">
-              Whether you have a role in <span className="text-[var(--text-primary)] font-bold">IT technical support</span>, a cybersecurity challenge, an AI project, or just want to talk Linux and networks — I&apos;m always open to interesting conversations.
-            </p>
-
-            <motion.a
-              href="mailto:usamasethar1@gmail.com"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base transition-all duration-300 bg-[var(--accent)] text-[#f8f7f4] shadow-lg"
-              whileHover={{ 
-                scale: 1.03, 
-                y: -2,
-                boxShadow: "0 20px 40px -10px var(--accent)" // Adds a glowing shadow on hover
-              }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <Send size={18} /> Send a Message
-            </motion.a>
-
-            <div className="mt-8 flex items-center gap-3">
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-              </span>
-              <span className="text-sm text-[var(--text-secondary)] font-[var(--font-jetbrains)]">Open to full-time & contract roles</span>
-            </div>
-          </motion.div>
-
-          {/* RIGHT COLUMN: Interactive Glassmorphism Links */}
-          <motion.div initial={{ opacity: 0, x: 30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }} className="space-y-4">
-            {contactLinks.map((link, i) => {
-              const Icon = link.icon;
-              const isHovered = hoveredLink === i;
-
-              return (
-                <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: i * 0.1 + 0.4, duration: 0.45 }}
-                >
-                  <motion.a
-                    href={link.href}
-                    target={link.href.startsWith("mailto") ? "_self" : "_blank"}
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => setHoveredLink(i)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                    animate={{
-                      y: isHovered ? -5 : 0,
-                      borderColor: isHovered ? link.color : "var(--border)",
-                      backgroundColor: isHovered ? "var(--bg-card)" : "rgba(0,0,0,0)",
-                      boxShadow: isHovered ? `0 20px 40px -10px ${link.color}30` : "0 4px 6px -1px rgba(0,0,0,0)"
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                    className="flex items-center gap-4 p-4 sm:p-6 rounded-2xl bg-transparent backdrop-blur-md border transition-colors cursor-pointer"
-                  >
-                    {/* Animated Icon Box */}
-                    <motion.div 
-                      className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border outline outline-1 transition-colors"
-                      animate={{
-                        backgroundColor: isHovered ? link.color : "var(--tag-bg)",
-                        color: isHovered ? "#fff" : link.color,
-                        borderColor: "var(--bg)",
-                        // 👇 FIX: Completely changed to rgba(0,0,0,0)
-                        outlineColor: isHovered ? link.color : "rgba(0,0,0,0)" 
-                      }}
-                    >
-                      <Icon size={20} />
-                    </motion.div>
-                    
-                    {/* Animated Text Block */}
-                    <div className="flex-1 min-w-0">
-                      <motion.p 
-                        className="text-xs font-medium mb-1 uppercase tracking-widest font-[var(--font-jetbrains)] transition-colors"
-                        animate={{ color: isHovered ? "var(--text-primary)" : "var(--text-muted)" }}
-                      >
-                        {link.label}
-                      </motion.p>
-                      <h4 
-                        className="text-sm sm:text-base font-bold truncate transition-colors" 
-                        style={{ fontFamily: "var(--font-syne)", color: "var(--text-primary)" }}
-                      >
-                        {link.value}
-                      </h4>
-                    </div>
-
-                    {/* Animated Arrow */}
-                    <motion.div
-                      animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
-                      transition={{ duration: 0.2 }}
-                      style={{ color: link.color }}
-                    >
-                      <ArrowUpRight size={20} className="shrink-0" />
-                    </motion.div>
-                  </motion.a>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-
+    <section id="contact" className="py-28 px-6 max-w-3xl mx-auto w-full" aria-label="Contact">
+      <div className="mb-12 text-center">
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="h-px w-12" style={{ backgroundColor: "var(--border)" }} />
+          <span className="text-xs font-mono font-semibold tracking-widest uppercase" style={{ color: "var(--accent)" }}>
+            04 / Connect
+          </span>
+          <div className="h-px w-12" style={{ backgroundColor: "var(--border)" }} />
         </div>
+        <h2 className="text-4xl sm:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: "var(--font-syne)", color: "var(--text-primary)" }}>
+          Get In Touch
+        </h2>
+        <p className="text-sm leading-relaxed max-w-lg mx-auto" style={{ color: "var(--text-secondary)" }}>
+          Have a question, a project proposal, or just want to say hi? Drop a message below and I'll get back to you as soon as possible.
+        </p>
       </div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
+        className="p-8 sm:p-10 rounded-[2rem] border backdrop-blur-md relative overflow-hidden"
+        style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border)" }}
+      >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
+          
+          {/* Honeypot Spam Protection */}
+          <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)", fontFamily: "var(--font-jetbrains)" }}>Name</label>
+              <input type="text" id="name" name="name" required placeholder="John Doe" className="px-4 py-3 rounded-xl border outline-none transition-colors" style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text-primary)" }} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)", fontFamily: "var(--font-jetbrains)" }}>Email</label>
+              <input type="email" id="email" name="email" required placeholder="john@example.com" className="px-4 py-3 rounded-xl border outline-none transition-colors" style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text-primary)" }} />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)", fontFamily: "var(--font-jetbrains)" }}>Message</label>
+            <textarea id="message" name="message" required rows={5} placeholder="How can I help you?" className="px-4 py-3 rounded-xl border outline-none transition-colors resize-none" style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)", color: "var(--text-primary)" }} />
+          </div>
+
+          <button type="submit" disabled={status === "submitting" || status === "success"} className="mt-2 flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed" style={{ backgroundColor: "var(--accent)", color: "#07111D", fontFamily: "var(--font-jetbrains)" }}>
+            {status === "idle" && <><Send size={18} /> Send Message</>}
+            {status === "submitting" && <><Loader2 size={18} className="animate-spin" /> Sending...</>}
+            {status === "success" && <><CheckCircle2 size={18} /> Message Sent!</>}
+            {status === "error" && <><AlertCircle size={18} /> Error! Try Again.</>}
+          </button>
+        </form>
+      </motion.div>
     </section>
   );
 }
