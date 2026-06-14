@@ -11,7 +11,10 @@ export default function Contact() {
     e.preventDefault();
     setStatus("submitting");
 
-    const formData = new FormData(e.currentTarget);
+    // Capture the form element immediately before React clears it
+    const form = e.currentTarget;
+
+    const formData = new FormData(form);
     const data = {
       name: formData.get("name"),
       email: formData.get("email"),
@@ -20,7 +23,6 @@ export default function Contact() {
     };
 
     try {
-      // 👇 Pointing to our custom Next.js API Route!
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,13 +31,14 @@ export default function Contact() {
 
       if (response.ok) {
         setStatus("success");
-        e.currentTarget.reset();
+        form.reset(); // Use the captured variable to reset the fields safely
         setTimeout(() => setStatus("idle"), 5000);
       } else {
         setStatus("error");
         setTimeout(() => setStatus("idle"), 5000);
       }
     } catch (error) {
+      console.error("Frontend error:", error);
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
     }
