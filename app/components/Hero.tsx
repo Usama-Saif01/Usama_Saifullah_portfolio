@@ -143,7 +143,7 @@ export default function Hero() {
           <a href="#projects" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm transition-transform hover:scale-105" style={{ backgroundColor: "var(--text-primary)", color: "var(--bg)", fontFamily: "var(--font-syne)" }}>
             View Projects <ChevronRight size={18} />
           </a>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm border transition-colors hover:bg-black/5 dark:hover:bg-white/5" style={{ borderColor: "var(--text-secondary)", color: "var(--text-primary)", fontFamily: "var(--font-syne)" }}>
+          <a href="/Usama-Saifullah-Resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-sm border transition-colors hover:bg-black/5 dark:hover:bg-white/5" style={{ borderColor: "var(--text-secondary)", color: "var(--text-primary)", fontFamily: "var(--font-syne)" }}>
             <FileText size={18} /> Download CV
           </a>
         </motion.div>
