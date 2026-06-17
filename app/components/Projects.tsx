@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Bot, Brain, Shield, ScanFace, ExternalLink } from "lucide-react";
+import { Bot, Brain, Shield, ScanFace, ExternalLink, Smartphone } from "lucide-react";
+import Link from "next/link";
 
 // --- Custom SVG Icon ---
 const GithubIcon = (props: any) => (
@@ -13,12 +14,21 @@ const GithubIcon = (props: any) => (
 
 const projects = [
   {
+    title: "Health Track App",
+    subtitle: "Native Android Health Tracker",
+    description: "A native Android health tracking application built via Trusted Web Activities, deployed on edge infrastructure.",
+    icon: Smartphone,
+    github: "https://github.com/Usama-Saif01",
+    color: "#eab308",
+    caseStudy: "/projects/health-track"
+  },
+  {
     title: "TurtleBot3 Enhanced Navigation",
     subtitle: "Autonomous A* Pathfinding",
     description: "Engineered an advanced navigation system in ROS Noetic utilizing A* algorithms with real-time dynamic obstacle detection in cluttered environments.",
     icon: Bot,
     github: "https://github.com/Usama-Saif01/turtlebot3_enhanced_nav",
-    color: "#10b981" 
+    color: "#10b981"
   },
   {
     title: "AI-Powered Lungs Disease Diagnosis",
@@ -26,7 +36,7 @@ const projects = [
     description: "Developed a CNN capable of identifying pulmonary conditions from medical imaging data. Built the full pipeline from data preprocessing to inference.",
     icon: Brain,
     github: "https://github.com/Usama-Saifullah/AI-Lungs-Diagnosis-CS007",
-    color: "#0ea5e9" 
+    color: "#0ea5e9"
   },
   {
     title: "Secure System Provisioning",
@@ -34,7 +44,7 @@ const projects = [
     description: "Executed bare-metal installations and hardened environments for Kali Linux and Windows Server. Automated DNS, DHCP, and FTP protocol management.",
     icon: Shield,
     github: "https://github.com/Usama-Saif01",
-    color: "#8b5cf6" 
+    color: "#8b5cf6"
   },
   {
     title: "Face Emotion Recognition CNN",
@@ -42,7 +52,7 @@ const projects = [
     description: "Deep learning project classifying facial expressions into 7 emotions using a custom CNN and TensorFlow. Includes real-time webcam detection via OpenCV.",
     icon: ScanFace,
     github: "https://github.com/Usama-Saif01/Face-Emotion-Recognition",
-    color: "#f43f5e" 
+    color: "#f43f5e"
   }
 ];
 
@@ -72,10 +82,10 @@ export default function Projects() {
           const Icon = project.icon;
           const isHovered = hoveredIndex === i;
 
-          const offset = i - 1.5;
-          const defaultRotate = offset * 6; 
-          const defaultX = offset * 300; 
-          const defaultY = Math.abs(offset) * 16; 
+          const offset = i - (projects.length - 1) / 2;
+          const defaultRotate = offset * 6;
+          const defaultX = offset * 260;
+          const defaultY = Math.abs(offset) * 16;
 
           let targetX = isDesktop ? defaultX : 0;
           let targetY = isDesktop ? defaultY : 0;
@@ -85,12 +95,12 @@ export default function Projects() {
 
           if (isDesktop && hoveredIndex !== null) {
             if (isHovered) {
-              targetY = defaultY - 30; 
-              targetRotate = 0;        
+              targetY = defaultY - 30;
+              targetRotate = 0;
               targetScale = 1.05;
               targetZ = 50;
             } else {
-              if (i < hoveredIndex) targetX = defaultX - 60; 
+              if (i < hoveredIndex) targetX = defaultX - 60;
               if (i > hoveredIndex) targetX = defaultX + 60;
             }
           }
@@ -130,13 +140,23 @@ export default function Projects() {
                 <p className="text-sm leading-relaxed transition-colors" style={{ color: "var(--text-secondary)" }}>{project.description}</p>
               </div>
 
-              <div className="mt-auto border-t pt-6 flex items-center gap-6 transition-colors" style={{ borderColor: "var(--border)" }}>
-                <a href={project.github} className="flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-70" style={{ color: "var(--text-secondary)" }}>
+              <div className="mt-auto border-t pt-6 flex items-center justify-between gap-2 transition-colors" style={{ borderColor: "var(--border)" }}>
+                <a href={project.github} className="flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-70 shrink-0" style={{ color: "var(--text-secondary)" }}>
                   <GithubIcon size={18} /> Source
                 </a>
-                <a href={project.github} className="flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-70" style={{ color: "var(--text-secondary)" }}>
-                  <ExternalLink size={18} /> Open
-                </a>
+                {project.caseStudy ? (
+                  <Link
+                    href={project.caseStudy}
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-opacity hover:opacity-80"
+                    style={{ backgroundColor: "var(--accent)", color: "#07111D", fontFamily: "var(--font-jetbrains)" }}
+                  >
+                    Read Case Study
+                  </Link>
+                ) : (
+                  <a href={project.github} className="flex items-center gap-2 text-sm font-semibold transition-colors hover:opacity-70 shrink-0" style={{ color: "var(--text-secondary)" }}>
+                    <ExternalLink size={18} /> Open
+                  </a>
+                )}
               </div>
             </motion.article>
           );
